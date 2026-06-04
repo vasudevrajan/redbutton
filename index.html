@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Don't Press The Button</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.red {
+    background: #e53935;
+    color: white;
+}
+
+.green {
+    background: #43a047;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div id="app"></div>
+</div>
+
+<script>
+let step = 0;
+
+const steps = [
+{
+    title: "Don't press the red button.",
+    button: "🔴 Red Button"
+},
+{
+    title: "I literally just told you not to press it.",
+    button: "🔴 Red Button"
+},
+{
+    title: "Why are you insisting on this?",
+    button: "🔴 Red Button"
+},
+{
+    title: "🏆 Achievement Unlocked: Curiosity",
+    text: "+10 XP — Most people would have stopped by now.",
+    button: "🔴 Continue"
+},
+{
+    title: "Reward Available",
+    text: "You've successfully ignored all instructions.\nClick below to claim your reward.",
+    button: "🎁 Claim Reward"
+}
+];
+
+function render() {
+    const s = steps[step];
+    document.getElementById("app").innerHTML = `
+        <h2>${s.title}</h2>
+        <p>${s.text || ""}</p>
+        <button class="${step === 4 ? 'green' : 'red'}" onclick="nextStep()">
+            ${s.button}
+        </button>
+    `;
+}
+
+function nextStep() {
+    if (step < steps.length - 1) {
+        step++;
+        render();
+    } else {
+        sendWhatsApp();
+    }
+}
+
+function sendWhatsApp() {
+    const phone = "41797285953";
+    const code = "QR_GAME_V1";
+
+    const message = encodeURIComponent(
+        "I failed the test successfully. I'd like to claim my reward. 🎁\n\n" +
+        "Game: Don't Press The Button\n" +
+        "Code: " + code
+    );
+
+    window.location.href = `https://wa.me/${phone}?text=${message}`;
+}
+
+render();
+</script>
+
+</body>r
+</html>
