@@ -2,325 +2,380 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Don't Press The Button</title>
+
 <style>
 *{box-sizing:border-box}
+
 body{
     margin:0;
     font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#f5f7fa,#e8edf5);
+    background:linear-gradient(135deg,#eef2f7,#dfe7f3);
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
     overflow:hidden;
 }
+
 .container{
-    background:white;
     width:95%;
     max-width:600px;
-    padding:28px;
-    border-radius:24px;
-    text-align:center;
+    background:white;
+    padding:24px;
+    border-radius:20px;
     box-shadow:0 20px 50px rgba(0,0,0,.12);
+    text-align:center;
     position:relative;
-    overflow:hidden;
 }
+
 .fade{
-    animation:fade .35s ease;
+    animation:fade .3s ease;
 }
+
 @keyframes fade{
     from{opacity:0;transform:translateY(10px)}
     to{opacity:1;transform:translateY(0)}
 }
-h1,h2{margin-top:0}
+
+h1,h2{margin:10px 0}
+
 button{
+    width:100%;
+    padding:18px;
+    font-size:20px;
     border:none;
     border-radius:999px;
-    padding:18px 24px;
-    width:100%;
-    font-size:20px;
+    margin-top:15px;
     cursor:pointer;
-    margin-top:16px;
     transition:.2s;
 }
-button:active{
-    transform:scale(.97);
-}
+
+button:active{transform:scale(.96)}
+
 .red{
     background:#e53935;
     color:white;
     animation:pulse 1.5s infinite;
 }
-.green{
-    background:#43a047;
-    color:white;
-}
-.blue{
-    background:#1976d2;
-    color:white;
-}
+
+.green{background:#43a047;color:white;}
+.blue{background:#1976d2;color:white;}
+
 @keyframes pulse{
     0%,100%{transform:scale(1)}
     50%{transform:scale(1.05)}
 }
+
+/* progress */
 .progress{
     width:100%;
-    height:20px;
+    height:18px;
     background:#eee;
     border-radius:999px;
     overflow:hidden;
-    margin-top:16px;
+    margin-top:15px;
 }
 .bar{
-    width:0%;
     height:100%;
+    width:0%;
     background:#43a047;
-    transition:.2s;
 }
-.badge{
-    background:#f4f4f4;
-    padding:12px;
-    border-radius:12px;
-    margin:10px 0;
-    text-align:left;
-}
-.trophy{
-    font-size:60px;
-    animation:pop .5s ease;
-}
-@keyframes pop{
-    0%{transform:scale(0)}
-    100%{transform:scale(1)}
-}
+
+/* catch game */
 #catchArea{
     position:relative;
     height:320px;
-    border:2px dashed #ddd;
+    border:2px dashed #ccc;
     border-radius:16px;
-    margin-top:16px;
+    margin-top:15px;
 }
+
 #jumpBtn{
     position:absolute;
-    width:120px;
+    width:140px;
 }
+
+/* confetti */
 .confetti{
     position:fixed;
-    width:10px;
-    height:10px;
+    width:8px;
+    height:8px;
     top:-20px;
     animation:fall 3s linear forwards;
 }
+
 @keyframes fall{
     to{
         transform:translateY(110vh) rotate(720deg);
         opacity:0;
     }
 }
+
+/* shake */
+.shake{animation:shake .4s}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-6px)}
+    80%{transform:translateX(6px)}
+}
+
+.notice{
+    margin-top:10px;
+    font-size:14px;
+    color:#444;
+}
 </style>
 </head>
+
 <body>
-<div class="container">
+
+<div class="container" id="container">
     <div id="app"></div>
 </div>
+
 <script>
+
 let screen = 0;
-let tapCount = 0;
-let catchCount = 0;
-const screens = [
-"warn1",
-"warn2",
-"warn3",
-"achievement",
-"analysis",
-"tapgame",
-"catchgame",
-"summary",
-"finalanalysis",
-"reward"
-];
-function next(){
-    screen++;
-    render();
-}
-function render(){
+let taps = 0;
+let hits = 0;
+
 const app = document.getElementById("app");
-const current = screens[screen];
-if(current==="warn1"){
-app.innerHTML=`
-<div class="fade">
+const container = document.getElementById("container");
+
+function vibrate(ms){
+    if(navigator.vibrate) navigator.vibrate(ms);
+}
+
+function render(){
+
+app.classList.add("fade");
+setTimeout(()=>app.classList.remove("fade"),300);
+
+if(screen === 0){
+app.innerHTML = `
 <h2>Don't press the red button.</h2>
 <button class="red" onclick="next()">🔴 Red Button</button>
-</div>`;
+`;
 }
-else if(current==="warn2"){
-app.innerHTML=`
-<div class="fade">
-<h2>I literally just told you not to press it.</h2>
+
+else if(screen === 1){
+app.innerHTML = `
+<h2>I literally told you not to press it.</h2>
 <button class="red" onclick="next()">🔴 Red Button</button>
-</div>`;
+`;
 }
-else if(current==="warn3"){
-app.innerHTML=`
-<div class="fade">
+
+else if(screen === 2){
+app.innerHTML = `
 <h2>Why are you still doing this?</h2>
 <button class="red" onclick="next()">🔴 Red Button</button>
-</div>`;
+`;
 }
-else if(current==="achievement"){
-app.innerHTML=`
-<div class="fade">
-<div class="trophy">🏆</div>
-<h2>Achievement Unlocked</h2>
+
+else if(screen === 3){
+app.innerHTML = `
+<h1>🏆 Achievement Unlocked</h1>
 <p>Curiosity +10 XP</p>
 <button class="blue" onclick="next()">Continue</button>
-</div>`;
+`;
+vibrate(80);
 }
-else if(current==="analysis"){
-const patience = Math.floor(Math.random()*40)+60;
-app.innerHTML=`
-<div class="fade">
+
+else if(screen === 4){
+
+let patience = 70 + Math.floor(Math.random()*20);
+
+app.innerHTML = `
 <h2>Analyzing User...</h2>
-<div class="badge">Curiosity: 100%</div>
-<div class="badge">Patience: ${patience}%</div>
-<div class="badge">Rule Following: 0%</div>
-<p><b>Verdict:</b><br>
-Extremely unlikely to read warning labels.</p>
+
+<p>Curiosity: 100%</p>
+<p>Patience: ${patience}%</p>
+<p>Rule Following: 0%</p>
+
+<p class="notice">"Does not read instructions clearly."</p>
+
 <button class="blue" onclick="next()">Continue</button>
-</div>`;
+`;
 }
-else if(current==="tapgame"){
-app.innerHTML=`
-<div class="fade">
-<h2>One Final Test</h2>
-<p>Tap the button 20 times in 5 seconds</p>
-<h3 id="counter">0 / 20</h3>
-<h3 id="timer">5</h3>
-<button id="tapBtn" class="red">TAP TAP TAP</button>
-</div>`;
-startTapGame();
+
+else if(screen === 5){
+taps = 0;
+
+app.innerHTML = `
+<h2>Tap Challenge</h2>
+<p>Tap 20 times in 5 seconds</p>
+
+<h2 id="counter">0 / 20</h2>
+<h2 id="timer">5</h2>
+
+<button class="red" id="tapBtn">TAP</button>
+<p class="notice" id="msg"></p>
+`;
+
+startTap();
 }
-else if(current==="catchgame"){
-app.innerHTML=`
-<div class="fade">
+
+else if(screen === 6){
+hits = 0;
+
+app.innerHTML = `
 <h2>Catch The Button</h2>
-<p>Catch it 10 times.</p>
-<h3 id="hits">0 / 10</h3>
+<p>Catch it 10 times</p>
+
+<h2 id="hits">0 / 10</h2>
+
 <div id="catchArea">
 <button id="jumpBtn" class="red">Catch Me</button>
 </div>
-</div>`;
-startCatchGame();
+
+<p class="notice" id="msg"></p>
+`;
+
+startCatch();
 }
-else if(current==="summary"){
-app.innerHTML=`
-<div class="fade">
+
+else if(screen === 7){
+app.innerHTML = `
 <h2>🏆 Achievements</h2>
-<div class="badge">✓ Ignored Instructions</div>
-<div class="badge">✓ Persistent Clicking</div>
-<div class="badge">✓ Mobile Tap Master</div>
-<div class="badge">✓ Button Hunter</div>
-<div class="badge">✓ Certified Rule Breaker</div>
+<p>✓ Ignored Instructions</p>
+<p>✓ Persistent Clicking</p>
+<p>✓ Mobile Tap Master</p>
+<p>✓ Button Hunter</p>
+
 <button class="blue" onclick="next()">Continue</button>
-</div>`;
+`;
 }
-else if(current==="finalanalysis"){
-app.innerHTML=`
-<div class="fade">
+
+else if(screen === 8){
+app.innerHTML = `
 <h2>Final Analysis</h2>
-<div class="badge">Curiosity: 100%</div>
-<div class="badge">Persistence: 100%</div>
-<div class="badge">Rule Following: 0%</div>
-<p><b>Verdict:</b><br>
-Exactly the type of person we expected.</p>
+
+<p>Curiosity: 100%</p>
+<p>Persistence: 100%</p>
+<p>Rule Following: 0%</p>
+
+<p><b>"Exactly the type of person we expected."</b></p>
+
 <button class="blue" onclick="next()">Show Reward</button>
-</div>`;
+`;
 }
-else if(current==="reward"){
-launchConfetti();
-app.innerHTML=`
-<div class="fade">
-<h1>🎁 REWARD UNLOCKED</h1>
-<p>
-You ignored every instruction,
-completed every challenge,
-and somehow made it this far.
-</p>
-<button class="green" onclick="claimReward()">
-Claim Reward
-</button>
-</div>`;
+
+else if(screen === 9){
+confetti();
+
+app.innerHTML = `
+<h1>🎁 Reward Unlocked</h1>
+<p>You made it.</p>
+
+<button class="green" onclick="reward()">Claim Reward</button>
+`;
 }
+
 }
-function startTapGame(){
-tapCount = 0;
+
+function next(){
+screen++;
+render();
+}
+
+function startTap(){
+
 let time = 5;
 const btn = document.getElementById("tapBtn");
+
 btn.onclick = ()=>{
-tapCount++;
-document.getElementById("counter").innerText =
-tapCount + " / 20";
+taps++;
+document.getElementById("counter").innerText = `${taps} / 20`;
+vibrate(20);
 };
-const interval = setInterval(()=>{
+
+let timer = setInterval(()=>{
+
 time--;
 document.getElementById("timer").innerText = time;
-if(time<=0){
-clearInterval(interval);
-setTimeout(()=>{
-next();
-},500);
+
+if(time <= 0){
+clearInterval(timer);
+
+if(taps >= 20){
+document.getElementById("msg").innerText = "That was impressive.";
+vibrate(80);
+} else {
+document.getElementById("msg").innerText = "We expected more.";
 }
+
+setTimeout(next, 1200);
+}
+
 },1000);
 }
-function startCatchGame(){
-catchCount = 0;
+
+function startCatch(){
+
 const area = document.getElementById("catchArea");
 const btn = document.getElementById("jumpBtn");
-moveButton();
+
+move();
+
 btn.onclick = ()=>{
-catchCount++;
-document.getElementById("hits").innerText =
-catchCount + " / 10";
-if(catchCount===3){
-alert("Beginner luck.");
-}
-if(catchCount===6){
-alert("You're taking this seriously.");
-}
-if(catchCount>=10){
-alert("Fine. You win.");
-next();
+
+hits++;
+document.getElementById("hits").innerText = `${hits} / 10`;
+
+vibrate(20);
+
+if(hits === 3) setMsg("Beginner luck.");
+if(hits === 6) setMsg("Still going?");
+if(hits >= 10){
+setMsg("Fine. You win.");
+setTimeout(next, 600);
 return;
 }
-moveButton();
+
+move();
 };
-function moveButton(){
-const maxX = area.clientWidth - 130;
-const maxY = area.clientHeight - 70;
+
+function move(){
+const maxX = area.clientWidth - btn.offsetWidth;
+const maxY = area.clientHeight - btn.offsetHeight;
+
 btn.style.left = Math.random()*maxX + "px";
 btn.style.top = Math.random()*maxY + "px";
 }
+
+function setMsg(t){
+document.getElementById("msg").innerText = t;
 }
-function launchConfetti(){
+}
+
+function confetti(){
 for(let i=0;i<120;i++){
 const c = document.createElement("div");
 c.className="confetti";
 c.style.left=Math.random()*100+"vw";
-c.style.background=
-`hsl(${Math.random()*360},100%,50%)`;
+c.style.background=`hsl(${Math.random()*360},100%,50%)`;
 document.body.appendChild(c);
 setTimeout(()=>c.remove(),3000);
 }
 }
-function claimReward(){
-const message = encodeURIComponent(
+
+function reward(){
+const msg = encodeURIComponent(
 "I failed the test successfully. 🎁\n\nWhat's my reward?"
 );
+
 window.location.href =
-`https://wa.me/41797285953?text=${message}`;
+`https://wa.me/41797285953?text=${msg}`;
 }
+
 render();
+
 </script>
+
 </body>
 </html>
