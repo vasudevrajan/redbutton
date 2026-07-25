@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Don’t thank me 😘</title>
-
 
 <style>
 
@@ -17,182 +17,250 @@
     box-sizing:border-box;
 }
 
-
 body{
 
+    width:100vw;
     height:100vh;
 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
 
-    background:#222;
+    background:#111;
 
     font-family:"Courier New",monospace;
 
+    overflow:hidden;
+
 }
 
 
+/* Nokia 3310 body */
 
-#phone{
+.phone{
 
-    background:#9bbc0f;
+    width:380px;
 
-    border:12px solid #555;
+    background:#bdbdbd;
 
-    border-radius:20px;
+    border-radius:35px;
 
-    padding:20px;
+    padding:25px;
+
+    box-shadow:
+    inset 0 0 25px #777,
+    0 20px 50px #000;
 
     text-align:center;
 
+}
+
+
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#222;
+
+    margin-bottom:12px;
+
+}
+
+
+
+
+.screen{
+
+    background:#9ca38a;
+
+    border:10px solid #333;
+
+    padding:12px;
+
+    border-radius:8px;
+
     box-shadow:
-    inset 0 0 20px #306230,
-    0 10px 30px black;
+    inset 0 0 20px #555;
 
 }
 
 
-
-h1{
-
-    color:#071807;
-
-    font-size:20px;
-
-    margin-bottom:10px;
-
-}
-
-
-
-#score{
-
-    color:#071807;
-
-    margin-bottom:10px;
-
-    font-size:16px;
-
-}
 
 
 
 canvas{
 
-    background:#9bbc0f;
+    width:336px;
 
-    border:4px solid #306230;
+    height:192px;
+
+    background:#b8c090;
 
     image-rendering:pixelated;
 
-}
-
-
-
-h2{
-
-    color:#071807;
-
-    font-size:16px;
-
-    margin-top:10px;
+    border:2px solid #222;
 
 }
 
 
 
-#leaderboard{
 
-    color:#071807;
 
-    text-align:left;
+.info{
 
-    width:220px;
+    color:#111;
 
-    margin:10px auto;
+    margin-top:8px;
 
-    font-size:14px;
+    font-size:15px;
 
 }
 
-
-
-#leaderboard li{
-
-    padding:2px;
-
-}
 
 
 
 #message{
 
-    height:25px;
+    height:20px;
 
-    margin-top:10px;
+    font-weight:bold;
 
-    color:#071807;
-
-    font-size:18px;
+    margin-top:5px;
 
 }
 
 
 
-#nameBox{
+
+
+#menuScreen{
 
     display:none;
 
-    color:#071807;
+    color:#111;
 
-    margin-top:10px;
+    text-align:left;
 
-}
-
-
-
-#playerName{
-
-    width:180px;
-
-    padding:5px;
-
-    text-align:center;
-
-    background:#9bbc0f;
-
-    border:2px solid #306230;
-
-    color:#071807;
-
-    font-family:"Courier New";
-
-    font-size:16px;
+    height:120px;
 
 }
 
 
 
-button{
 
-    margin-top:10px;
 
-    padding:8px 20px;
+#scores{
 
-    background:#306230;
+    font-size:14px;
 
-    color:#9bbc0f;
-
-    border:none;
-
-    cursor:pointer;
-
-    font-family:inherit;
+    line-height:18px;
 
 }
+
+
+
+
+.keypad{
+
+    margin-top:20px;
+
+}
+
+
+
+.row{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin:8px;
+
+}
+
+
+
+
+
+.key{
+
+    width:60px;
+
+    height:38px;
+
+    background:#444;
+
+    color:white;
+
+    border-radius:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:18px;
+
+    box-shadow:
+
+    inset 0 -4px 0 #222;
+
+    user-select:none;
+
+}
+
+
+
+.key:active{
+
+    transform:translateY(3px);
+
+}
+
+
+
+
+
+.softkeys{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:15px;
+
+}
+
+
+
+.soft{
+
+    width:90px;
+
+    height:32px;
+
+    background:#333;
+
+    color:white;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:14px;
+
+}
+
 
 
 </style>
@@ -203,318 +271,337 @@ button{
 <body>
 
 
-<div id="phone">
+<div class="phone">
 
 
-<h1>Don’t thank me 😘</h1>
+<div class="logo">
+NOKIA
+</div>
 
 
-<div id="score">
+
+<div class="screen">
+
+
+<canvas id="game" width="84" height="48"></canvas>
+
+
+<div class="info">
 
 SCORE:
-<span id="scoreValue">0</span>
+<span id="score">0</span>
 
 &nbsp;&nbsp;
 
 HI:
-<span id="highScore">0</span>
+<span id="high">0</span>
 
 </div>
-
-
-<canvas id="game" width="400" height="400"></canvas>
-
-
-<h2>TOP 10</h2>
-
-
-<ol id="leaderboard"></ol>
 
 
 <div id="message"></div>
 
 
+<div id="menuScreen">
 
-<div id="nameBox">
+<div id="scores"></div>
 
-<p>ENTER YOUR NAME</p>
+</div>
 
-<input id="playerName" maxlength="20" placeholder="Your name">
-
-<br>
-
-<button onclick="saveScore()">
-SAVE
-</button>
 
 </div>
 
 
 
-<button onclick="restartGame()">
-START
-</button>
+<div class="softkeys">
 
+<div class="soft" onclick="openMenu()">
+MENU
+</div>
+
+
+<div class="soft" onclick="closeMenu()">
+BACK
+</div>
+
+</div>
+
+
+
+
+<div class="keypad">
+
+
+<div class="row">
+
+<div class="key" onclick="move('up')">
+▲
+</div>
+
+</div>
+
+
+
+<div class="row">
+
+<div class="key" onclick="move('left')">
+◀
+</div>
+
+<div class="key" onclick="move('down')">
+▼
+</div>
+
+<div class="key" onclick="move('right')">
+▶
+</div>
+
+</div>
 
 
 </div>
 
+
+</div>
 
 
 <script>
 
-
-const canvas=document.getElementById("game");
-
-const ctx=canvas.getContext("2d");
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
 
-const grid=20;
+const WIDTH = 84;
+const HEIGHT = 48;
 
-const tiles=canvas.width/grid;
 
+let snake = [];
+let food = {};
 
-let snake;
+let dx = 1;
+let dy = 0;
 
-let food;
-
-let dx;
-
-let dy;
-
-let score;
-
-let speed;
-
-let loop;
-
+let score = 0;
 
 let highScore =
-localStorage.getItem("nokiaHigh") || 0;
+localStorage.getItem("nokiaHighScore") || 0;
 
 
-let topScores =
-JSON.parse(localStorage.getItem("snakeTop10")) || [];
+let gameLoop;
+
+let speed = 120;
+
+
+let scores =
+JSON.parse(localStorage.getItem("nokiaScores")) || [];
 
 
 
-document.getElementById("highScore").textContent=highScore;
+document.getElementById("high").textContent = highScore;
 
-
-
-function updateLeaderboard(){
-
-let list=document.getElementById("leaderboard");
-
-list.innerHTML="";
-
-
-topScores.forEach(entry=>{
-
-
-let item=document.createElement("li");
-
-
-item.textContent =
-entry.name + " - " + entry.score;
-
-
-list.appendChild(item);
-
-
-});
-
-
-}
 
 
 
 function startGame(){
 
 
-document.getElementById("message").textContent="";
+    document.getElementById("menuScreen").style.display="none";
+
+    document.getElementById("game").style.display="block";
 
 
-snake=[
+    snake = [
 
-{x:10,y:10},
+        {x:42,y:24},
+        {x:41,y:24},
+        {x:40,y:24}
 
-{x:9,y:10},
-
-{x:8,y:10}
-
-];
+    ];
 
 
-dx=1;
-
-dy=0;
-
-
-score=0;
-
-speed=180;
+    dx = 1;
+    dy = 0;
 
 
-document.getElementById("scoreValue").textContent=score;
+    score = 0;
+
+    speed = 120;
 
 
-food=createFood();
+    document.getElementById("score").textContent = score;
+
+    document.getElementById("message").textContent="";
 
 
-clearInterval(loop);
+    createFood();
 
 
-loop=setInterval(update,speed);
+    clearInterval(gameLoop);
 
 
-draw();
+    gameLoop=setInterval(
+        update,
+        speed
+    );
 
+
+    draw();
 
 }
+
 
 
 
 function createFood(){
 
 
-let f;
+    do{
 
 
-do{
+        food={
+
+            x:Math.floor(Math.random()*WIDTH),
+
+            y:Math.floor(Math.random()*HEIGHT)
+
+        };
 
 
-f={
+    }
 
-x:Math.floor(Math.random()*tiles),
+    while(
 
-y:Math.floor(Math.random()*tiles)
+        snake.some(
 
-};
+            part =>
+            part.x===food.x &&
+            part.y===food.y
+
+        )
+
+    );
 
 
 }
-while(
-snake.some(
-part=>part.x===f.x && part.y===f.y
-)
-);
 
 
-return f;
 
 
-}
+
 
 function update(){
 
 
-let head={
+    let head={
 
-x:snake[0].x+dx,
+        x:snake[0].x+dx,
 
-y:snake[0].y+dy
+        y:snake[0].y+dy
 
-};
-
-
-
-// Nokia style screen wrapping
-
-if(head.x<0)
-head.x=tiles-1;
-
-
-if(head.x>=tiles)
-head.x=0;
-
-
-if(head.y<0)
-head.y=tiles-1;
-
-
-if(head.y>=tiles)
-head.y=0;
+    };
 
 
 
+    // Nokia screen wrapping
 
-// Snake collision
+    if(head.x<0)
+        head.x=WIDTH-1;
 
-if(
-snake.some(
-part=>part.x===head.x &&
-part.y===head.y
-)
-){
 
-gameOver();
+    if(head.x>=WIDTH)
+        head.x=0;
 
-return;
+
+    if(head.y<0)
+        head.y=HEIGHT-1;
+
+
+    if(head.y>=HEIGHT)
+        head.y=0;
+
+
+
+
+
+    if(
+
+        snake.some(
+
+            part =>
+            part.x===head.x &&
+            part.y===head.y
+
+        )
+
+    ){
+
+        gameOver();
+
+        return;
+
+    }
+
+
+
+
+    snake.unshift(head);
+
+
+
+
+
+    if(
+
+        head.x===food.x &&
+        head.y===food.y
+
+    ){
+
+
+        score++;
+
+
+        document.getElementById("score").textContent=score;
+
+
+        createFood();
+
+
+
+        if(score%10===0 && speed>60){
+
+
+            speed-=10;
+
+
+            clearInterval(gameLoop);
+
+
+            gameLoop=setInterval(
+                update,
+                speed
+            );
+
+
+        }
+
+
+    }
+
+    else{
+
+
+        snake.pop();
+
+    }
+
+
+
+    draw();
+
 
 }
 
-
-
-snake.unshift(head);
-
-
-
-if(
-head.x===food.x &&
-head.y===food.y
-){
-
-
-score++;
-
-
-document.getElementById("scoreValue").textContent=score;
-
-
-food=createFood();
-
-
-
-if(score>highScore){
-
-highScore=score;
-
-localStorage.setItem(
-"nokiaHigh",
-highScore
-);
-
-document.getElementById("highScore").textContent=highScore;
-
-}
-
-
-
-if(score%5===0 && speed>100){
-
-speed-=10;
-
-clearInterval(loop);
-
-loop=setInterval(update,speed);
-
-}
-
-
-}
-else{
-
-snake.pop();
-
-}
-
-
-
-draw();
-
-
-}
 
 
 
@@ -523,62 +610,103 @@ draw();
 function draw(){
 
 
-ctx.fillStyle="#9bbc0f";
+    // LCD background
+
+    ctx.fillStyle="#b8c090";
 
 
-ctx.fillRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-
-
-// food
-
-ctx.fillStyle="#071807";
-
-
-ctx.fillRect(
-
-food.x*grid+5,
-
-food.y*grid+5,
-
-grid-10,
-
-grid-10
-
-);
+    ctx.fillRect(
+        0,
+        0,
+        WIDTH,
+        HEIGHT
+    );
 
 
 
-// snake
-
-snake.forEach(part=>{
 
 
-ctx.fillStyle="#071807";
+    // food sprite
+
+    ctx.fillStyle="#111";
 
 
-ctx.fillRect(
+    ctx.fillRect(
 
-part.x*grid,
+        food.x,
 
-part.y*grid,
+        food.y,
 
-grid-1,
+        2,
 
-grid-1
+        2
 
-);
+    );
 
 
-});
+
+
+
+
+    // snake sprites
+
+
+    snake.forEach((part,index)=>{
+
+
+        ctx.fillStyle="#111";
+
+
+
+        if(index===0){
+
+
+            // head
+
+            ctx.fillRect(
+
+                part.x,
+
+                part.y,
+
+                3,
+
+                3
+
+            );
+
+
+        }
+
+        else{
+
+
+            // body pixels
+
+            ctx.fillRect(
+
+                part.x,
+
+                part.y,
+
+                2,
+
+                2
+
+            );
+
+
+        }
+
+
+
+    });
+
 
 
 }
+
+
 
 
 
@@ -587,45 +715,45 @@ grid-1
 function gameOver(){
 
 
-clearInterval(loop);
+    clearInterval(gameLoop);
+
+
+    document.getElementById("message").textContent=
+    "GAME OVER";
 
 
 
-document.getElementById("nameBox").style.display="block";
+    if(score>highScore){
 
 
-document.getElementById("playerName").focus();
+        highScore=score;
+
+
+        localStorage.setItem(
+
+            "nokiaHighScore",
+
+            highScore
+
+        );
+
+
+        document.getElementById("high").textContent=
+        highScore;
+
+
+    }
 
 
 
-let count=0;
+    setTimeout(
+        saveScore,
+        500
+    );
 
-
-let blink=setInterval(()=>{
-
-
-document.getElementById("message").textContent=
-
-count%2===0
-?"GAME OVER"
-:"";
-
-
-count++;
-
-
-if(count>6){
-
-clearInterval(blink);
 
 }
 
-
-},400);
-
-
-
-}
 
 
 
@@ -634,62 +762,50 @@ clearInterval(blink);
 function saveScore(){
 
 
-let name =
-document.getElementById("playerName")
-.value
-.trim();
+    let name =
+    prompt("ENTER NAME");
 
 
 
-if(name===""){
+    if(!name){
 
-name="Anonymous";
+        name="Anonymous";
 
-}
-
-
-
-topScores.push({
-
-name:name,
-
-score:score
-
-});
+    }
 
 
 
-topScores.sort(
+    scores.push({
 
-(a,b)=>b.score-a.score
+        name:name,
 
-);
+        score:score
 
-
-
-topScores =
-topScores.slice(0,10);
+    });
 
 
 
-localStorage.setItem(
+    scores.sort(
 
-"snakeTop10",
+        (a,b)=>
+        b.score-a.score
 
-JSON.stringify(topScores)
-
-);
-
-
-
-updateLeaderboard();
+    );
 
 
 
-document.getElementById("nameBox").style.display="none";
+    scores=scores.slice(0,10);
 
 
-document.getElementById("playerName").value="";
+
+    localStorage.setItem(
+
+        "nokiaScores",
+
+        JSON.stringify(scores)
+
+    );
+
 
 
 }
@@ -698,19 +814,72 @@ document.getElementById("playerName").value="";
 
 
 
-function restartGame(){
+
+function move(direction){
 
 
-document.getElementById("nameBox").style.display="none";
+    switch(direction){
 
 
-startGame();
+        case "up":
+
+            if(dy!==1){
+
+                dx=0;
+                dy=-1;
+
+            }
+
+        break;
+
+
+
+        case "down":
+
+            if(dy!==-1){
+
+                dx=0;
+                dy=1;
+
+            }
+
+        break;
+
+
+
+        case "left":
+
+            if(dx!==1){
+
+                dx=-1;
+                dy=0;
+
+            }
+
+        break;
+
+
+
+        case "right":
+
+            if(dx!==-1){
+
+                dx=1;
+                dy=0;
+
+            }
+
+        break;
+
+
+    }
 
 
 }
 
-
-
+// =========================
+// CONTROLS + MENU + START
+// =========================
 
 
 // Keyboard controls
@@ -724,64 +893,40 @@ switch(event.key){
 
 
 case "ArrowUp":
-
 case "8":
 
-if(dy!==1){
-
-dx=0;
-
-dy=-1;
-
-}
+move("up");
 
 break;
-
 
 
 case "ArrowDown":
-
 case "2":
 
-if(dy!==-1){
-
-dx=0;
-
-dy=1;
-
-}
+move("down");
 
 break;
-
 
 
 case "ArrowLeft":
-
 case "4":
 
-if(dx!==1){
-
-dx=-1;
-
-dy=0;
-
-}
+move("left");
 
 break;
 
 
-
 case "ArrowRight":
-
 case "6":
 
-if(dx!==-1){
+move("right");
 
-dx=1;
+break;
 
-dy=0;
 
-}
+case "Enter":
+
+openMenu();
 
 break;
 
@@ -790,6 +935,7 @@ break;
 
 
 });
+
 
 
 
@@ -798,135 +944,237 @@ break;
 
 // Touch controls
 
-let startX=0;
 
-let startY=0;
+let touchStartX=0;
+let touchStartY=0;
 
 
 
 canvas.addEventListener(
 "touchstart",
-e=>{
+event=>{
 
-startX=e.touches[0].clientX;
 
-startY=e.touches[0].clientY;
+touchStartX=
+event.touches[0].clientX;
 
-});
+
+touchStartY=
+event.touches[0].clientY;
+
+
+},
+false
+);
+
 
 
 
 canvas.addEventListener(
 "touchend",
-e=>{
+event=>{
 
 
-let endX=e.changedTouches[0].clientX;
+let endX=
+event.changedTouches[0].clientX;
 
-let endY=e.changedTouches[0].clientY;
+
+let endY=
+event.changedTouches[0].clientY;
 
 
-let x=endX-startX;
 
-let y=endY-startY;
+let x=endX-touchStartX;
+
+let y=endY-touchStartY;
 
 
 
 if(Math.abs(x)>Math.abs(y)){
 
 
-if(x>0 && dx!==-1){
+if(x>0)
+move("right");
 
-dx=1;
-
-dy=0;
-
-}
-
-
-if(x<0 && dx!==1){
-
-dx=-1;
-
-dy=0;
-
-}
+else
+move("left");
 
 
 }
+
 else{
 
 
-if(y>0 && dy!==-1){
+if(y>0)
+move("down");
 
-dx=0;
-
-dy=1;
-
-}
-
-
-if(y<0 && dy!==1){
-
-dx=0;
-
-dy=-1;
-
-}
+else
+move("up");
 
 
 }
 
 
-});
+
+},
+false
+);
 
 
 
 
 
 
-// Nokia startup screen
+// Nokia menu
+
+
+function openMenu(){
+
+
+clearInterval(gameLoop);
+
+
+document.getElementById("game").style.display="none";
+
+
+document.getElementById("menuScreen").style.display="block";
+
+
+
+let html="";
+
+
+html+="SNAKE II<br><br>";
+
+html+="TOP 10<br>";
+
+html+="------------<br>";
+
+
+
+if(scores.length===0){
+
+html+="NO SCORES";
+
+}
+
+else{
+
+
+scores.forEach(
+
+(entry,index)=>{
+
+
+html+=
+
+(index+1)+
+". "+
+entry.name+
+" "+
+entry.score+
+"<br>";
+
+
+}
+
+
+);
+
+
+}
+
+
+
+document.getElementById("scores").innerHTML=html;
+
+
+}
+
+
+
+
+
+
+function closeMenu(){
+
+
+document.getElementById("menuScreen").style.display="none";
+
+
+document.getElementById("game").style.display="block";
+
+
+startGame();
+
+
+}
+
+
+
+
+
+
+
+// Startup screen
+
 
 function startup(){
 
 
-ctx.fillStyle="#9bbc0f";
+ctx.fillStyle="#b8c090";
 
 
 ctx.fillRect(
+
 0,
+
 0,
-400,
-400
+
+WIDTH,
+
+HEIGHT
+
 );
 
 
 
-ctx.fillStyle="#071807";
+ctx.fillStyle="#111";
 
 
-ctx.font="28px Courier New";
+ctx.font="8px Courier New";
 
 
 ctx.fillText(
-"Don’t",
-145,
-160
+
+"NOKIA",
+
+32,
+
+18
+
 );
 
 
 
 ctx.fillText(
-"thank me 😘",
-85,
-210
+
+"Snake",
+
+34,
+
+28
+
 );
 
 
 
 setTimeout(
+
 startGame,
+
 1500
+
 );
 
 
@@ -934,7 +1182,11 @@ startGame,
 
 
 
-updateLeaderboard();
+
+
+
+
+// Boot phone
 
 
 startup();
