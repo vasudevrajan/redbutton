@@ -1,57 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Don’t thank me 😘</title>
+<title>Nokia 3310 Snake II V5</title>
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
+    user-select:none;
+    -webkit-user-select:none;
 }
+
 
 body{
 
-    width:100vw;
+    margin:0;
     height:100vh;
 
     display:flex;
     justify-content:center;
     align-items:center;
 
-    background:#111;
+    background:#1b1b1b;
 
-    font-family:"Courier New",monospace;
-
-    overflow:hidden;
+    font-family:Arial,sans-serif;
 
 }
 
 
-/* Nokia 3310 body */
 
 .phone{
 
-    width:380px;
+    width:360px;
 
-    background:#bdbdbd;
+    background:#b8b8ad;
 
-    border-radius:35px;
+    border-radius:38px;
 
     padding:25px;
 
     box-shadow:
-    inset 0 0 25px #777,
-    0 20px 50px #000;
 
-    text-align:center;
+    inset -10px -10px 18px #777,
+    inset 10px 10px 18px #eee,
+    0 25px 50px #000;
+
+}
+
+
+
+.status{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#222;
+
+    font-size:12px;
+
+    margin-bottom:5px;
+
+}
+
+
+
+.screen-frame{
+
+    background:#444;
+
+    padding:14px;
+
+    border-radius:12px;
+
+}
+
+
+
+canvas{
+
+    width:100%;
+
+    display:block;
+
+    background:#9bbc0f;
+
+    border:4px solid #222;
+
+    image-rendering:pixelated;
 
 }
 
@@ -59,171 +99,67 @@ body{
 
 .logo{
 
-    font-size:24px;
+    text-align:center;
+
+    font-size:30px;
 
     font-weight:bold;
 
-    color:#222;
+    color:#333;
 
-    margin-bottom:12px;
-
-}
-
-
-
-
-.screen{
-
-    background:#9ca38a;
-
-    border:10px solid #333;
-
-    padding:12px;
-
-    border-radius:8px;
-
-    box-shadow:
-    inset 0 0 20px #555;
+    margin:15px;
 
 }
-
-
-
-
-
-canvas{
-
-    width:336px;
-
-    height:192px;
-
-    background:#b8c090;
-
-    image-rendering:pixelated;
-
-    border:2px solid #222;
-
-}
-
-
-
-
-
-.info{
-
-    color:#111;
-
-    margin-top:8px;
-
-    font-size:15px;
-
-}
-
-
-
-
-#message{
-
-    height:20px;
-
-    font-weight:bold;
-
-    margin-top:5px;
-
-}
-
-
-
-
-
-#menuScreen{
-
-    display:none;
-
-    color:#111;
-
-    text-align:left;
-
-    height:120px;
-
-}
-
-
-
-
-
-#scores{
-
-    font-size:14px;
-
-    line-height:18px;
-
-}
-
 
 
 
 .keypad{
 
-    margin-top:20px;
+    text-align:center;
 
 }
 
 
 
-.row{
+button{
 
-    display:flex;
+    width:52px;
 
-    justify-content:center;
+    height:42px;
 
-    gap:12px;
+    margin:3px;
 
-    margin:8px;
+    border:0;
 
-}
+    border-radius:10px;
 
+    background:#ddd;
 
+    font-weight:bold;
 
-
-
-.key{
-
-    width:60px;
-
-    height:38px;
-
-    background:#444;
-
-    color:white;
-
-    border-radius:20px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:18px;
-
-    box-shadow:
-
-    inset 0 -4px 0 #222;
-
-    user-select:none;
+    box-shadow:0 3px 0 #777;
 
 }
 
 
 
-.key:active{
+button:active{
 
     transform:translateY(3px);
 
 }
 
 
+
+.circle{
+
+    border-radius:50%;
+
+    width:55px;
+
+    height:55px;
+
+}
 
 
 
@@ -233,31 +169,15 @@ canvas{
 
     justify-content:space-between;
 
-    margin-top:15px;
+    margin-top:10px;
 
 }
 
 
 
-.soft{
+.softkeys button{
 
     width:90px;
-
-    height:32px;
-
-    background:#333;
-
-    color:white;
-
-    border-radius:15px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:14px;
 
 }
 
@@ -274,57 +194,47 @@ canvas{
 <div class="phone">
 
 
+
+<div class="status">
+
+<span id="signal">
+▮▮▮
+</span>
+
+
+<span id="clock">
+12:00
+</span>
+
+
+<span id="battery">
+▮▮▮
+</span>
+
+</div>
+
+
+
+
+<div class="screen-frame">
+
+
+<canvas id="lcd"
+width="84"
+height="48">
+</canvas>
+
+
+</div>
+
+
+
+
+
 <div class="logo">
 NOKIA
 </div>
 
-
-
-<div class="screen">
-
-
-<canvas id="game" width="84" height="48"></canvas>
-
-
-<div class="info">
-
-SCORE:
-<span id="score">0</span>
-
-&nbsp;&nbsp;
-
-HI:
-<span id="high">0</span>
-
-</div>
-
-
-<div id="message"></div>
-
-
-<div id="menuScreen">
-
-<div id="scores"></div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="softkeys">
-
-<div class="soft" onclick="openMenu()">
-MENU
-</div>
-
-
-<div class="soft" onclick="closeMenu()">
-BACK
-</div>
-
-</div>
 
 
 
@@ -332,72 +242,460 @@ BACK
 <div class="keypad">
 
 
-<div class="row">
+<div>
 
-<div class="key" onclick="move('up')">
+
+<button class="circle"
+onclick="press('UP')">
 ▲
+</button>
+
+
 </div>
 
-</div>
 
 
+<div>
 
-<div class="row">
 
-<div class="key" onclick="move('left')">
+<button class="circle"
+onclick="press('LEFT')">
 ◀
-</div>
+</button>
 
-<div class="key" onclick="move('down')">
-▼
-</div>
 
-<div class="key" onclick="move('right')">
+<button class="circle"
+onclick="press('OK')">
+5
+</button>
+
+
+<button class="circle"
+onclick="press('RIGHT')">
 ▶
-</div>
-
-</div>
+</button>
 
 
 </div>
 
 
+
+
+<div>
+
+
+<button class="circle"
+onclick="press('DOWN')">
+▼
+</button>
+
+
 </div>
+
+
+
+
+<div>
+
+
+<button onclick="press('UP')">
+2
+</button>
+
+
+<button onclick="press('LEFT')">
+4
+</button>
+
+
+<button onclick="press('OK')">
+5
+</button>
+
+
+<button onclick="press('RIGHT')">
+6
+</button>
+
+
+<button onclick="press('DOWN')">
+8
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="softkeys">
+
+
+<button onclick="press('MENU')">
+MENU
+</button>
+
+
+<button onclick="press('BACK')">
+BACK
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
 
 
 <script>
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+
+////////////////////////////////////////////////////
+// VERSION 5 - PART 1
+// LCD SYSTEM + NOKIA FOUNDATION
+////////////////////////////////////////////////////
 
 
-const WIDTH = 84;
-const HEIGHT = 48;
+
+const canvas =
+document.getElementById("lcd");
 
 
-let snake = [];
-let food = {};
+const ctx =
+canvas.getContext("2d");
 
-let dx = 1;
-let dy = 0;
 
-let score = 0;
+
+ctx.imageSmoothingEnabled=false;
+
+
+
+const LCD_WIDTH=84;
+
+const LCD_HEIGHT=48;
+
+
+
+const PIXEL=1;
+
+
+
+function lcdClear(){
+
+    ctx.fillStyle="#9bbc0f";
+
+    ctx.fillRect(
+        0,
+        0,
+        LCD_WIDTH,
+        LCD_HEIGHT
+    );
+
+}
+
+
+
+
+function lcdText(
+text,
+x,
+y,
+size=6
+){
+
+    ctx.fillStyle="#0f380f";
+
+    ctx.font=
+    size+"px monospace";
+
+    ctx.fillText(
+        text,
+        x,
+        y
+    );
+
+}
+
+
+
+
+
+function lcdPixel(
+x,
+y
+){
+
+    ctx.fillStyle="#0f380f";
+
+    ctx.fillRect(
+        x,
+        y,
+        1,
+        1
+    );
+
+}
+
+
+
+
+
+function updateClock(){
+
+    let now=new Date();
+
+
+    document.getElementById(
+        "clock"
+    ).innerHTML=
+
+    now
+    .getHours()
+    .toString()
+    .padStart(2,"0")
+    +
+    ":"
+    +
+    now
+    .getMinutes()
+    .toString()
+    .padStart(2,"0");
+
+}
+
+
+
+setInterval(
+updateClock,
+1000
+);
+
+
+updateClock();
+
+
+
+
+
+
+function nokiaBoot(){
+
+
+    lcdClear();
+
+
+    lcdText(
+        "NOKIA",
+        28,
+        22,
+        8
+    );
+
+
+
+    setTimeout(()=>{
+
+
+        lcdClear();
+
+
+        lcdText(
+            "SNAKE II",
+            22,
+            25,
+            6
+        );
+
+
+    },1200);
+
+
+
+    setTimeout(()=>{
+
+
+        showMenu();
+
+
+    },2500);
+
+
+
+}
+
+
+
+
+
+
+let gameState="BOOT";
+
+
+
+
+
+function press(key){
+
+    console.log(
+        key
+    );
+
+}
+
+
+
+
+
+
+function showMenu(){
+
+    gameState="MENU";
+
+
+    lcdClear();
+
+
+    lcdText(
+        "SNAKE II",
+        22,
+        18,
+        6
+    );
+
+
+    lcdText(
+        "5 START",
+        22,
+        30,
+        6
+    );
+
+
+    lcdText(
+        "MENU LVL",
+        10,
+        42,
+        5
+    );
+
+
+}
+
+
+
+
+
+
+nokiaBoot();
+
+////////////////////////////////////////////////////
+// VERSION 5 - PART 2
+// SNAKE II ENGINE
+////////////////////////////////////////////////////
+
+
+const GRID_SIZE=2;
+
+
+// 84x48 LCD with 2x2 pixels per game block
+
+const GAME_WIDTH =
+Math.floor(LCD_WIDTH / GRID_SIZE);
+
+
+const GAME_HEIGHT =
+Math.floor(LCD_HEIGHT / GRID_SIZE);
+
+
+
+let snake=[];
+
+let food={};
+
+
+let direction="RIGHT";
+
+let nextDirection="RIGHT";
+
+
+let score=0;
+
 
 let highScore =
-localStorage.getItem("nokiaHighScore") || 0;
-
-
-let gameLoop;
-
-let speed = 120;
-
-
-let scores =
-JSON.parse(localStorage.getItem("nokiaScores")) || [];
+Number(
+localStorage.getItem("snakeV5High")
+)||0;
 
 
 
-document.getElementById("high").textContent = highScore;
+let level =
+Number(
+localStorage.getItem("snakeV5Level")
+)||1;
+
+
+
+let running=false;
+
+
+let gameTimer=null;
+
+
+
+let maze=[];
+
+
+
+const mazeLayouts=[
+
+
+[
+{x:15,y:8},
+{x:15,y:9},
+{x:15,y:10},
+
+{x:26,y:8},
+{x:26,y:9},
+{x:26,y:10}
+],
+
+
+
+[
+{x:10,y:12},
+{x:11,y:12},
+{x:12,y:12},
+
+{x:30,y:5},
+{x:31,y:5},
+{x:32,y:5}
+],
+
+
+
+[
+{x:20,y:4},
+{x:20,y:5},
+{x:20,y:6},
+{x:20,y:7},
+
+{x:20,y:15},
+{x:20,y:16}
+]
+
+];
+
+
+
+
 
 
 
@@ -405,54 +703,109 @@ document.getElementById("high").textContent = highScore;
 function startGame(){
 
 
-    document.getElementById("menuScreen").style.display="none";
+    snake=[
 
-    document.getElementById("game").style.display="block";
+        {
+            x:20,
+            y:12
+        },
 
+        {
+            x:19,
+            y:12
+        },
 
-    snake = [
-
-        {x:42,y:24},
-        {x:41,y:24},
-        {x:40,y:24}
+        {
+            x:18,
+            y:12
+        }
 
     ];
 
 
-    dx = 1;
-    dy = 0;
+
+    direction="RIGHT";
+
+    nextDirection="RIGHT";
 
 
-    score = 0;
 
-    speed = 120;
-
-
-    document.getElementById("score").textContent = score;
-
-    document.getElementById("message").textContent="";
+    score=0;
 
 
-    createFood();
 
+    maze =
+    JSON.parse(
 
-    clearInterval(gameLoop);
+        JSON.stringify(
 
+            mazeLayouts[
+            Math.floor(
+            Math.random()
+            *
+            mazeLayouts.length
+            )
+            ]
 
-    gameLoop=setInterval(
-        update,
-        speed
+        )
+
     );
 
 
-    draw();
+
+    spawnFood();
+
+
+
+    running=true;
+
+    gameState="PLAY";
+
+
+
+    clearInterval(gameTimer);
+
+
+
+    gameTimer=setInterval(
+
+        updateGame,
+
+        getSpeed()
+
+    );
+
+
+
+    drawGame();
+
 
 }
 
 
 
 
-function createFood(){
+
+
+
+
+function getSpeed(){
+
+
+    return 250-(level*15);
+
+
+}
+
+
+
+
+
+
+
+
+
+function spawnFood(){
 
 
     do{
@@ -460,27 +813,53 @@ function createFood(){
 
         food={
 
-            x:Math.floor(Math.random()*WIDTH),
+            x:
+            Math.floor(
+            Math.random()
+            *
+            GAME_WIDTH
+            ),
 
-            y:Math.floor(Math.random()*HEIGHT)
+
+            y:
+            Math.floor(
+            Math.random()
+            *
+            GAME_HEIGHT
+            )
 
         };
 
 
+
     }
+
 
     while(
 
         snake.some(
 
-            part =>
+            part=>
+
             part.x===food.x &&
+
             part.y===food.y
 
         )
 
-    );
+        ||
 
+        maze.some(
+
+            wall=>
+
+            wall.x===food.x &&
+
+            wall.y===food.y
+
+        )
+
+    );
 
 }
 
@@ -489,35 +868,98 @@ function createFood(){
 
 
 
-function update(){
+
+
+
+function updateGame(){
+
+
+    direction=nextDirection;
+
 
 
     let head={
 
-        x:snake[0].x+dx,
+        x:snake[0].x,
 
-        y:snake[0].y+dy
+        y:snake[0].y
 
     };
 
 
 
-    // Nokia screen wrapping
+
+
+    if(direction==="UP")
+        head.y--;
+
+
+
+    if(direction==="DOWN")
+        head.y++;
+
+
+
+    if(direction==="LEFT")
+        head.x--;
+
+
+
+    if(direction==="RIGHT")
+        head.x++;
+
+
+
+
+
+
+    // Snake II wrap mode
+
 
     if(head.x<0)
-        head.x=WIDTH-1;
+        head.x=GAME_WIDTH-1;
 
 
-    if(head.x>=WIDTH)
+
+    if(head.x>=GAME_WIDTH)
         head.x=0;
 
 
+
     if(head.y<0)
-        head.y=HEIGHT-1;
+        head.y=GAME_HEIGHT-1;
 
 
-    if(head.y>=HEIGHT)
+
+    if(head.y>=GAME_HEIGHT)
         head.y=0;
+
+
+
+
+
+
+
+    if(
+
+        maze.some(
+
+            wall=>
+
+            wall.x===head.x &&
+
+            wall.y===head.y
+
+        )
+
+    ){
+
+        gameOver();
+
+        return;
+
+    }
+
 
 
 
@@ -527,8 +969,10 @@ function update(){
 
         snake.some(
 
-            part =>
+            part=>
+
             part.x===head.x &&
+
             part.y===head.y
 
         )
@@ -544,7 +988,11 @@ function update(){
 
 
 
+
+
+
     snake.unshift(head);
+
 
 
 
@@ -553,6 +1001,7 @@ function update(){
     if(
 
         head.x===food.x &&
+
         head.y===food.y
 
     ){
@@ -561,29 +1010,28 @@ function update(){
         score++;
 
 
-        document.getElementById("score").textContent=score;
+
+        if(score>highScore){
 
 
-        createFood();
+            highScore=score;
 
 
+            localStorage.setItem(
 
-        if(score%10===0 && speed>60){
+                "snakeV5High",
 
+                highScore
 
-            speed-=10;
-
-
-            clearInterval(gameLoop);
-
-
-            gameLoop=setInterval(
-                update,
-                speed
             );
 
 
         }
+
+
+
+        spawnFood();
+
 
 
     }
@@ -593,11 +1041,15 @@ function update(){
 
         snake.pop();
 
+
     }
 
 
 
-    draw();
+
+
+    drawGame();
+
 
 
 }
@@ -607,104 +1059,138 @@ function update(){
 
 
 
-function draw(){
 
 
-    // LCD background
 
-    ctx.fillStyle="#b8c090";
+function drawGame(){
 
 
-    ctx.fillRect(
-        0,
-        0,
-        WIDTH,
-        HEIGHT
+    lcdClear();
+
+
+
+    ctx.fillStyle="#0f380f";
+
+
+
+
+
+
+    // maze
+
+
+    maze.forEach(
+
+        wall=>{
+
+
+            ctx.fillRect(
+
+                wall.x*GRID_SIZE,
+
+                wall.y*GRID_SIZE,
+
+                GRID_SIZE,
+
+                GRID_SIZE
+
+            );
+
+
+        }
+
     );
 
 
 
 
 
-    // food sprite
 
-    ctx.fillStyle="#111";
+
+    // food
 
 
     ctx.fillRect(
 
-        food.x,
+        food.x*GRID_SIZE,
 
-        food.y,
+        food.y*GRID_SIZE,
+
+        GRID_SIZE,
+
+        GRID_SIZE
+
+    );
+
+
+
+
+
+
+
+
+    // snake
+
+
+    snake.forEach(
+
+        part=>{
+
+
+            ctx.fillRect(
+
+                part.x*GRID_SIZE,
+
+                part.y*GRID_SIZE,
+
+                GRID_SIZE,
+
+                GRID_SIZE
+
+            );
+
+
+        }
+
+    );
+
+
+
+
+
+
+
+    lcdText(
+
+        "S"+score,
 
         2,
 
-        2
+        6,
+
+        5
 
     );
 
 
 
+    lcdText(
 
+        "H"+highScore,
 
+        55,
 
-    // snake sprites
+        6,
 
+        5
 
-    snake.forEach((part,index)=>{
-
-
-        ctx.fillStyle="#111";
-
-
-
-        if(index===0){
-
-
-            // head
-
-            ctx.fillRect(
-
-                part.x,
-
-                part.y,
-
-                3,
-
-                3
-
-            );
-
-
-        }
-
-        else{
-
-
-            // body pixels
-
-            ctx.fillRect(
-
-                part.x,
-
-                part.y,
-
-                2,
-
-                2
-
-            );
-
-
-        }
-
-
-
-    });
+    );
 
 
 
 }
+
+
 
 
 
@@ -715,41 +1201,226 @@ function draw(){
 function gameOver(){
 
 
-    clearInterval(gameLoop);
-
-
-    document.getElementById("message").textContent=
-    "GAME OVER";
+    clearInterval(gameTimer);
 
 
 
-    if(score>highScore){
+    running=false;
 
 
-        highScore=score;
+
+    gameState="GAMEOVER";
+
+
+
+    lcdClear();
+
+
+
+    lcdText(
+
+        "GAME OVER",
+
+        15,
+
+        22,
+
+        7
+
+    );
+
+
+
+    lcdText(
+
+        "5 RETRY",
+
+        22,
+
+        35,
+
+        6
+
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+// Replace the basic button handler
+
+
+function press(key){
+
+
+
+    if(key==="OK"){
+
+
+        if(!running){
+
+            startGame();
+
+        }
+
+
+        return;
+
+    }
+
+
+
+
+
+
+    if(key==="MENU"){
+
+
+        level++;
+
+
+
+        if(level>9)
+
+            level=1;
+
 
 
         localStorage.setItem(
 
-            "nokiaHighScore",
+            "snakeV5Level",
 
-            highScore
+            level
 
         );
 
 
-        document.getElementById("high").textContent=
-        highScore;
+
+        showMenu();
+
+
+
+        return;
 
 
     }
 
 
 
-    setTimeout(
-        saveScore,
-        500
-    );
+
+
+
+
+    if(key==="BACK"){
+
+
+        clearInterval(gameTimer);
+
+
+        running=false;
+
+
+        showMenu();
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+
+    if(!running)
+
+        return;
+
+
+
+
+
+
+
+
+    if(
+
+        key==="UP"
+
+        &&
+
+        direction!=="DOWN"
+
+    )
+
+        nextDirection="UP";
+
+
+
+
+
+
+
+    if(
+
+        key==="DOWN"
+
+        &&
+
+        direction!=="UP"
+
+    )
+
+        nextDirection="DOWN";
+
+
+
+
+
+
+
+
+    if(
+
+        key==="LEFT"
+
+        &&
+
+        direction!=="RIGHT"
+
+    )
+
+        nextDirection="LEFT";
+
+
+
+
+
+
+
+
+    if(
+
+        key==="RIGHT"
+
+        &&
+
+        direction!=="LEFT"
+
+    )
+
+        nextDirection="RIGHT";
+
 
 
 }
@@ -759,353 +1430,769 @@ function gameOver(){
 
 
 
-function saveScore(){
 
-
-    let name =
-    prompt("ENTER NAME");
-
-
-
-    if(!name){
-
-        name="Anonymous";
-
-    }
-
-
-
-    scores.push({
-
-        name:name,
-
-        score:score
-
-    });
-
-
-
-    scores.sort(
-
-        (a,b)=>
-        b.score-a.score
-
-    );
-
-
-
-    scores=scores.slice(0,10);
-
-
-
-    localStorage.setItem(
-
-        "nokiaScores",
-
-        JSON.stringify(scores)
-
-    );
-
-
-
-}
-
-
-
-
-
-
-function move(direction){
-
-
-    switch(direction){
-
-
-        case "up":
-
-            if(dy!==1){
-
-                dx=0;
-                dy=-1;
-
-            }
-
-        break;
-
-
-
-        case "down":
-
-            if(dy!==-1){
-
-                dx=0;
-                dy=1;
-
-            }
-
-        break;
-
-
-
-        case "left":
-
-            if(dx!==1){
-
-                dx=-1;
-                dy=0;
-
-            }
-
-        break;
-
-
-
-        case "right":
-
-            if(dx!==-1){
-
-                dx=1;
-                dy=0;
-
-            }
-
-        break;
-
-
-    }
-
-
-}
-
-// =========================
-// CONTROLS + MENU + START
-// =========================
-
-
-// Keyboard controls
 
 document.addEventListener(
+
 "keydown",
-event=>{
+
+function(e){
 
 
-switch(event.key){
+
+    if(e.key==="ArrowUp")
+        press("UP");
 
 
-case "ArrowUp":
-case "8":
 
-move("up");
-
-break;
+    if(e.key==="ArrowDown")
+        press("DOWN");
 
 
-case "ArrowDown":
-case "2":
 
-move("down");
-
-break;
+    if(e.key==="ArrowLeft")
+        press("LEFT");
 
 
-case "ArrowLeft":
-case "4":
 
-move("left");
-
-break;
+    if(e.key==="ArrowRight")
+        press("RIGHT");
 
 
-case "ArrowRight":
-case "6":
 
-move("right");
-
-break;
+    if(e.key==="5" || e.key==="Enter")
+        press("OK");
 
 
-case "Enter":
 
-openMenu();
-
-break;
+    if(e.key==="2")
+        press("UP");
 
 
-}
+
+    if(e.key==="4")
+        press("LEFT");
+
+
+
+    if(e.key==="6")
+        press("RIGHT");
+
+
+
+    if(e.key==="8")
+        press("DOWN");
 
 
 });
 
+////////////////////////////////////////////////////
+// VERSION 5 - PART 3
+// NOKIA EFFECTS + BONUS FEATURES
+////////////////////////////////////////////////////
+
+
+let audioContext=null;
+
+
+let bonusItem=null;
+
+
+let bonusTimer=null;
+
+
+
+function initAudio(){
+
+
+    if(!audioContext){
+
+
+        audioContext =
+        new (
+        window.AudioContext ||
+        window.webkitAudioContext
+        )();
+
+
+    }
+
+
+}
+
+
+
+
+
+function tone(
+frequency=600,
+duration=80
+){
+
+
+    initAudio();
+
+
+
+    let osc =
+    audioContext.createOscillator();
+
+
+    let gain =
+    audioContext.createGain();
+
+
+
+    osc.type="square";
+
+
+    osc.frequency.value =
+    frequency;
+
+
+
+    osc.connect(gain);
+
+
+    gain.connect(
+        audioContext.destination
+    );
+
+
+
+    osc.start();
+
+
+
+    gain.gain.setValueAtTime(
+
+        0.12,
+
+        audioContext.currentTime
+
+    );
+
+
+
+    gain.gain.exponentialRampToValueAtTime(
+
+        0.01,
+
+        audioContext.currentTime+
+        duration/1000
+
+    );
+
+
+
+    osc.stop(
+
+        audioContext.currentTime+
+        duration/1000
+
+    );
+
+
+}
 
 
 
 
 
 
-// Touch controls
+
+function vibratePhone(){
 
 
-let touchStartX=0;
-let touchStartY=0;
+    if(navigator.vibrate){
+
+
+        navigator.vibrate(60);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+function createBonus(){
+
+
+    if(bonusItem)
+
+        return;
+
+
+
+    do{
+
+
+        bonusItem={
+
+
+            x:
+            Math.floor(
+            Math.random()*GAME_WIDTH
+            ),
+
+
+            y:
+            Math.floor(
+            Math.random()*GAME_HEIGHT
+            ),
+
+
+            value:25
+
+
+        };
+
+
+    }
+
+    while(
+
+        snake.some(
+
+            part=>
+
+            part.x===bonusItem.x &&
+
+            part.y===bonusItem.y
+
+        )
+
+    );
+
+
+
+    clearTimeout(
+        bonusTimer
+    );
+
+
+    bonusTimer=setTimeout(()=>{
+
+
+        bonusItem=null;
+
+
+    },6000);
+
+
+}
+
+
+
+
+
+
+
+
+function drawBonus(){
+
+
+    if(!bonusItem)
+
+        return;
+
+
+
+    ctx.fillStyle="#0f380f";
+
+
+
+    if(
+
+    Math.floor(
+    Date.now()/300
+    )%2
+
+    ){
+
+
+
+        ctx.fillRect(
+
+            bonusItem.x*GRID_SIZE,
+
+            bonusItem.y*GRID_SIZE,
+
+            GRID_SIZE,
+
+            GRID_SIZE
+
+        );
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+function checkBonus(){
+
+
+    if(!bonusItem)
+
+        return;
+
+
+
+
+    if(
+
+
+        snake[0].x===bonusItem.x &&
+
+        snake[0].y===bonusItem.y
+
+
+    ){
+
+
+        score += bonusItem.value;
+
+
+        bonusItem=null;
+
+
+
+        tone(
+            900,
+            120
+        );
+
+
+        vibratePhone();
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+// Add bonus drawing
+
+const originalDraw =
+drawGame;
+
+
+
+drawGame=function(){
+
+
+    originalDraw();
+
+
+    drawBonus();
+
+
+};
+
+
+
+
+
+
+
+
+// Add bonus checking
+
+const originalUpdate =
+updateGame;
+
+
+
+updateGame=function(){
+
+
+    let oldScore=score;
+
+
+
+    originalUpdate();
+
+
+
+    checkBonus();
+
+
+
+    if(score>oldScore){
+
+
+        tone(
+            650,
+            70
+        );
+
+
+        vibratePhone();
+
+
+
+        canvas.style.opacity="0.65";
+
+
+        setTimeout(()=>{
+
+
+            canvas.style.opacity="1";
+
+
+        },50);
+
+
+
+    }
+
+
+
+};
+
+
+
+
+
+
+
+
+// Bonus appears after eating every 5 items
+
+const originalSpawn =
+spawnFood;
+
+
+
+spawnFood=function(){
+
+
+    originalSpawn();
+
+
+
+    if(
+
+        score>0 &&
+
+        score%5===0
+
+    ){
+
+
+        createBonus();
+
+
+    }
+
+
+};
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////
+// BATTERY + SIGNAL
+////////////////////////////////////////////////////
+
+
+let batteryLevel=3;
+
+let signalLevel=3;
+
+
+
+function updatePhoneStatus(){
+
+
+
+    batteryLevel--;
+
+
+    signalLevel--;
+
+
+
+    if(batteryLevel<=0)
+
+        batteryLevel=3;
+
+
+
+    if(signalLevel<=0)
+
+        signalLevel=3;
+
+
+
+
+
+    document.getElementById(
+        "battery"
+    ).innerHTML =
+
+    "▮".repeat(
+        batteryLevel
+    );
+
+
+
+
+
+    document.getElementById(
+        "signal"
+    ).innerHTML =
+
+    "▮".repeat(
+        signalLevel
+    );
+
+
+
+}
+
+
+
+setInterval(
+
+    updatePhoneStatus,
+
+    15000
+
+);
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////
+// TOUCH SWIPE CONTROLS
+////////////////////////////////////////////////////
+
+
+let swipeX=0;
+
+let swipeY=0;
 
 
 
 canvas.addEventListener(
+
 "touchstart",
-event=>{
+
+function(e){
 
 
-touchStartX=
-event.touches[0].clientX;
+    swipeX =
+    e.changedTouches[0].screenX;
 
 
-touchStartY=
-event.touches[0].clientY;
+    swipeY =
+    e.changedTouches[0].screenY;
+
 
 
 },
-false
+{
+    passive:true
+}
+
 );
+
+
 
 
 
 
 canvas.addEventListener(
+
 "touchend",
-event=>{
 
-
-let endX=
-event.changedTouches[0].clientX;
-
-
-let endY=
-event.changedTouches[0].clientY;
+function(e){
 
 
 
-let x=endX-touchStartX;
-
-let y=endY-touchStartY;
-
+    let endX =
+    e.changedTouches[0].screenX;
 
 
-if(Math.abs(x)>Math.abs(y)){
+    let endY =
+    e.changedTouches[0].screenY;
 
 
-if(x>0)
-move("right");
 
-else
-move("left");
+    let dx=endX-swipeX;
+
+    let dy=endY-swipeY;
+
+
+
+
+
+    if(
+
+        Math.abs(dx) >
+
+        Math.abs(dy)
+
+    ){
+
+
+
+        if(dx>0)
+
+            press("RIGHT");
+
+        else
+
+            press("LEFT");
+
+
+
+    }
+
+    else{
+
+
+
+        if(dy>0)
+
+            press("DOWN");
+
+        else
+
+            press("UP");
+
+
+
+    }
+
 
 
 }
 
-else{
+);
 
 
-if(y>0)
-move("down");
-
-else
-move("up");
 
 
-}
 
 
+canvas.addEventListener(
+
+"touchmove",
+
+function(e){
+
+    e.preventDefault();
 
 },
-false
-);
 
-
-
-
-
-
-// Nokia menu
-
-
-function openMenu(){
-
-
-clearInterval(gameLoop);
-
-
-document.getElementById("game").style.display="none";
-
-
-document.getElementById("menuScreen").style.display="block";
-
-
-
-let html="";
-
-
-html+="SNAKE II<br><br>";
-
-html+="TOP 10<br>";
-
-html+="------------<br>";
-
-
-
-if(scores.length===0){
-
-html+="NO SCORES";
-
+{
+    passive:false
 }
-
-else{
-
-
-scores.forEach(
-
-(entry,index)=>{
-
-
-html+=
-
-(index+1)+
-". "+
-entry.name+
-" "+
-entry.score+
-"<br>";
-
-
-}
-
 
 );
 
-
-}
-
-
-
-document.getElementById("scores").innerHTML=html;
-
-
-}
+////////////////////////////////////////////////////
+// VERSION 5 - PART 4
+// FINAL NOKIA POLISH
+////////////////////////////////////////////////////
 
 
 
+let paused=false;
 
 
 
-function closeMenu(){
+////////////////////////////////////////////////////
+// PAUSE FUNCTION
+////////////////////////////////////////////////////
 
 
-document.getElementById("menuScreen").style.display="none";
+function togglePause(){
 
 
-document.getElementById("game").style.display="block";
+    if(!running)
+
+        return;
 
 
-startGame();
+
+    paused=!paused;
+
+
+
+    if(paused){
+
+
+        clearInterval(gameTimer);
+
+
+
+        lcdText(
+
+            "PAUSED",
+
+            25,
+
+            25,
+
+            7
+
+        );
+
+
+
+    }
+
+    else{
+
+
+        gameTimer=setInterval(
+
+            updateGame,
+
+            getSpeed()
+
+        );
+
+
+        drawGame();
+
+
+    }
 
 
 }
@@ -1116,66 +2203,96 @@ startGame();
 
 
 
-// Startup screen
+
+////////////////////////////////////////////////////
+// EXTEND KEYBOARD CONTROLS
+////////////////////////////////////////////////////
 
 
-function startup(){
+document.addEventListener(
 
+"keydown",
 
-ctx.fillStyle="#b8c090";
-
-
-ctx.fillRect(
-
-0,
-
-0,
-
-WIDTH,
-
-HEIGHT
-
-);
+function(e){
 
 
 
-ctx.fillStyle="#111";
+    if(e.key==="p" || e.key==="P"){
 
 
-ctx.font="8px Courier New";
+        togglePause();
 
 
-ctx.fillText(
+    }
 
-"NOKIA",
 
-32,
 
-18
+}
 
 );
 
 
 
-ctx.fillText(
-
-"Snake",
-
-34,
-
-28
-
-);
 
 
 
-setTimeout(
 
-startGame,
 
-1500
+////////////////////////////////////////////////////
+// FINAL NOKIA MENU
+////////////////////////////////////////////////////
 
-);
+
+function showMenu(){
+
+
+    gameState="MENU";
+
+
+
+    lcdClear();
+
+
+
+    lcdText(
+
+        "SNAKE II",
+
+        22,
+
+        16,
+
+        7
+
+    );
+
+
+
+    lcdText(
+
+        "5 PLAY",
+
+        25,
+
+        28,
+
+        6
+
+    );
+
+
+
+    lcdText(
+
+        "LV "+level,
+
+        25,
+
+        40,
+
+        6
+
+    );
 
 
 }
@@ -1186,15 +2303,100 @@ startGame,
 
 
 
-// Boot phone
+
+////////////////////////////////////////////////////
+// FINAL BOOT ANIMATION
+////////////////////////////////////////////////////
 
 
-startup();
+function finalBoot(){
 
 
+
+    gameState="BOOT";
+
+
+
+    lcdClear();
+
+
+
+    lcdText(
+
+        "NOKIA",
+
+        28,
+
+        20,
+
+        8
+
+    );
+
+
+
+    setTimeout(()=>{
+
+
+        lcdClear();
+
+
+
+        lcdText(
+
+            "SNAKE II",
+
+            22,
+
+            25,
+
+            6
+
+        );
+
+
+    },1200);
+
+
+
+
+
+    setTimeout(()=>{
+
+
+        showMenu();
+
+
+
+    },2500);
+
+
+
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////
+// START FINAL SYSTEM
+////////////////////////////////////////////////////
+
+
+finalBoot();
+
+
+
+
+
+////////////////////////////////////////////////////
+// CLOSE SCRIPT BELOW THIS LINE
+////////////////////////////////////////////////////
 
 </script>
-
 
 </body>
 
