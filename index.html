@@ -3,184 +3,382 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Nokia 3310 Snake II V5</title>
+<title>Vasudev's Interactive World</title>
 
 <style>
 
-*{
-    box-sizing:border-box;
-    user-select:none;
-    -webkit-user-select:none;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+
+    min-height:100vh;
+    background:
+    linear-gradient(135deg,#050816,#111827,#1e1b4b);
+
+    color:white;
+    overflow-x:hidden;
 }
 
 
-body{
+.app {
 
-    margin:0;
-    height:100vh;
-
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
 
-    background:#1b1b1b;
-
-    font-family:Arial,sans-serif;
-
 }
 
 
+.screen {
 
-.phone{
-
-    width:360px;
-
-    background:#b8b8ad;
-
-    border-radius:38px;
-
-    padding:25px;
-
-    box-shadow:
-
-    inset -10px -10px 18px #777,
-    inset 10px 10px 18px #eee,
-    0 25px 50px #000;
-
-}
-
-
-
-.status{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:#222;
-
-    font-size:12px;
-
-    margin-bottom:5px;
-
-}
-
-
-
-.screen-frame{
-
-    background:#444;
-
-    padding:14px;
-
-    border-radius:12px;
-
-}
-
-
-
-canvas{
-
+    display:none;
     width:100%;
+    max-width:500px;
+    padding:25px;
+    text-align:center;
+
+    animation:fade .5s ease;
+
+}
+
+
+.screen.active {
 
     display:block;
 
-    background:#9bbc0f;
+}
 
-    border:4px solid #222;
 
-    image-rendering:pixelated;
+@keyframes fade {
+
+from {
+    opacity:0;
+    transform:translateY(20px);
+}
+
+to {
+    opacity:1;
+    transform:translateY(0);
+}
 
 }
 
 
 
-.logo{
+.card {
 
-    text-align:center;
+    background:
+    rgba(255,255,255,.08);
 
-    font-size:30px;
+    backdrop-filter:blur(15px);
 
-    font-weight:bold;
+    border-radius:25px;
 
-    color:#333;
+    padding:30px 20px;
 
-    margin:15px;
+    border:
+    1px solid rgba(255,255,255,.15);
 
-}
-
-
-
-.keypad{
-
-    text-align:center;
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.4);
 
 }
 
 
 
-button{
+h1 {
 
-    width:52px;
+    font-size:2.2rem;
+    margin-bottom:15px;
 
-    height:42px;
+}
 
-    margin:3px;
 
-    border:0;
+h2 {
+
+    margin-bottom:20px;
+
+}
+
+
+p {
+
+    color:#d1d5db;
+
+    line-height:1.6;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.logo {
+
+    font-size:70px;
+    margin-bottom:15px;
+
+}
+
+
+
+.button {
+
+    width:100%;
+
+    padding:15px;
+
+    margin:10px 0;
+
+    border:none;
+
+    border-radius:18px;
+
+    color:white;
+
+    font-size:1.1rem;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.button:active {
+
+    transform:scale(.96);
+
+}
+
+
+
+.snake-btn {
+
+    background:
+    linear-gradient(135deg,#22c55e,#16a34a);
+
+}
+
+
+.personality-btn {
+
+    background:
+    linear-gradient(135deg,#3b82f6,#2563eb);
+
+}
+
+
+
+.instagram-btn {
+
+    background:
+    linear-gradient(135deg,#ec4899,#8b5cf6);
+
+}
+
+
+
+.home-btn {
+
+    background:
+    linear-gradient(135deg,#374151,#111827);
+
+}
+
+
+
+.pause-btn {
+
+    background:#92400e;
+
+}
+
+
+
+.small-text {
+
+    color:#9ca3af;
+
+    font-size:.85rem;
+
+}
+
+
+
+/* =====================
+SNAKE
+===================== */
+
+
+#gameCanvas {
+
+    width:100%;
+
+    background:#020617;
+
+    border-radius:20px;
+
+    border:
+    2px solid #22c55e;
+
+}
+
+
+
+.score {
+
+    font-size:1.2rem;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.controls {
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,70px);
+
+    justify-content:center;
+
+    gap:8px;
+
+    margin-top:20px;
+
+}
+
+
+
+.control-btn {
+
+    height:60px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:
+    rgba(255,255,255,.15);
+
+    color:white;
+
+    font-size:25px;
+
+}
+
+
+
+.empty {
+
+    visibility:hidden;
+
+}
+
+
+
+/* =====================
+QUIZ
+===================== */
+
+
+.progress {
+
+    height:8px;
+
+    background:#374151;
 
     border-radius:10px;
 
-    background:#ddd;
+    overflow:hidden;
 
-    font-weight:bold;
-
-    box-shadow:0 3px 0 #777;
+    margin-bottom:20px;
 
 }
 
 
 
-button:active{
+.progress-bar {
 
-    transform:translateY(3px);
+    height:100%;
 
-}
+    width:0%;
 
+    background:#3b82f6;
 
-
-.circle{
-
-    border-radius:50%;
-
-    width:55px;
-
-    height:55px;
+    transition:.3s;
 
 }
 
 
 
-.softkeys{
+.answer {
 
-    display:flex;
+    background:
+    rgba(255,255,255,.1);
 
-    justify-content:space-between;
+    border:
+    1px solid rgba(255,255,255,.2);
 
-    margin-top:10px;
+    padding:15px;
+
+    border-radius:15px;
+
+    margin:10px 0;
+
+    cursor:pointer;
 
 }
 
 
 
-.softkeys button{
+.answer:hover {
 
-    width:90px;
+    background:
+    rgba(255,255,255,.2);
 
 }
 
+
+
+/* GAME OVER */
+
+.game-over-score {
+
+    font-size:1.4rem;
+
+    margin:20px;
+
+}
+
+
+
+@media(max-width:400px){
+
+    h1 {
+        font-size:1.8rem;
+    }
+
+
+    .controls {
+
+        grid-template-columns:
+        repeat(3,60px);
+
+    }
+
+}
 
 
 </style>
@@ -191,88 +389,153 @@ button:active{
 <body>
 
 
-<div class="phone">
+<div class="app">
+
+
+<!-- =====================
+HOME
+===================== -->
+
+
+<section class="screen active" id="home">
+
+
+<div class="card">
+
+
+<div class="logo">🌍</div>
+
+
+<h1>
+Welcome to Vasudev’s World
+</h1>
+
+
+<p>
+
+A small interactive place where you can
+play a game, discover your personality,
+and meet the person behind this.
+
+</p>
 
 
 
-<div class="status">
+<button class="button snake-btn"
+onclick="showScreen('snake')">
 
-<span id="signal">
-▮▮▮
-</span>
+🐍 Play Snake
 
-
-<span id="clock">
-12:00
-</span>
+</button>
 
 
-<span id="battery">
-▮▮▮
-</span>
+
+<button class="button personality-btn"
+onclick="startQuiz()">
+
+🧠 Discover Your Personality
+
+</button>
+
+
+
+<button class="button instagram-btn"
+onclick="openInstagram()">
+
+👀 Who’s Behind This?
+
+</button>
+
+
+
+<p class="small-text">
+
+Created with curiosity & creativity ✨
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =====================
+SNAKE
+===================== -->
+
+
+<section class="screen" id="snake">
+
+
+<div class="card">
+
+
+<h2>
+🐍 Snake
+</h2>
+
+
+
+<div class="score">
+
+Score:
+<span id="score">0</span>
+
+&nbsp;|&nbsp;
+
+Best:
+<span id="best">0</span>
 
 </div>
 
 
 
-
-<div class="screen-frame">
-
-
-<canvas id="lcd"
-width="84"
-height="48">
+<canvas id="gameCanvas"
+width="350"
+height="350">
 </canvas>
 
 
-</div>
 
 
+<div class="controls">
 
 
-
-<div class="logo">
-NOKIA
-</div>
+<button class="control-btn empty"></button>
 
 
-
-
-
-<div class="keypad">
-
-
-<div>
-
-
-<button class="circle"
-onclick="press('UP')">
-▲
+<button class="control-btn"
+onclick="changeDirection('up')">
+⬆️
 </button>
 
 
-</div>
+<button class="control-btn empty"></button>
 
 
 
-<div>
-
-
-<button class="circle"
-onclick="press('LEFT')">
-◀
+<button class="control-btn"
+onclick="changeDirection('left')">
+⬅️
 </button>
 
 
-<button class="circle"
-onclick="press('OK')">
-5
+
+<button class="control-btn"
+onclick="changeDirection('down')">
+⬇️
 </button>
 
 
-<button class="circle"
-onclick="press('RIGHT')">
-▶
+
+<button class="control-btn"
+onclick="changeDirection('right')">
+➡️
 </button>
 
 
@@ -281,420 +544,297 @@ onclick="press('RIGHT')">
 
 
 
-<div>
+<button class="button pause-btn"
+onclick="pauseGame()">
 
+⏸ Pause
 
-<button class="circle"
-onclick="press('DOWN')">
-▼
 </button>
 
 
-</div>
 
+<button class="button home-btn"
+onclick="showScreen('home')">
 
+🏠 Back to Home
 
-
-<div>
-
-
-<button onclick="press('UP')">
-2
 </button>
-
-
-<button onclick="press('LEFT')">
-4
-</button>
-
-
-<button onclick="press('OK')">
-5
-</button>
-
-
-<button onclick="press('RIGHT')">
-6
-</button>
-
-
-<button onclick="press('DOWN')">
-8
-</button>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="softkeys">
-
-
-<button onclick="press('MENU')">
-MENU
-</button>
-
-
-<button onclick="press('BACK')">
-BACK
-</button>
-
-
-</div>
 
 
 
 </div>
 
 
+</section>
+
+
+
+
+
+<!-- =====================
+GAME OVER
+===================== -->
+
+
+<section class="screen" id="gameOver">
+
+
+<div class="card">
+
+
+<h1>
+🐍 Game Over
+</h1>
+
+
+<div class="game-over-score">
+
+Score:
+<span id="finalScore">
+0
+</span>
+
+<br>
+
+Best:
+<span id="finalBest">
+0
+</span>
+
+</div>
+
+
+
+<button class="button snake-btn"
+onclick="showScreen('snake')">
+
+🔄 Play Again
+
+</button>
+
+
+
+<button class="button home-btn"
+onclick="showScreen('home')">
+
+🏠 Back to Home
+
+</button>
+
+
+
+<button class="button instagram-btn"
+onclick="openInstagram()">
+
+👀 Who’s Behind This?
+
+</button>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =====================
+QUIZ
+===================== -->
+
+
+<section class="screen" id="quiz">
+
+
+<div class="card">
+
+
+<h2>
+🧠 Personality Test
+</h2>
+
+
+
+<div class="progress">
+
+<div class="progress-bar"
+id="progress">
+
+</div>
+
+</div>
+
+
+
+<div id="quizContent"></div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =====================
+RESULT
+===================== -->
+
+
+<section class="screen" id="result">
+
+
+<div class="card">
+
+
+<div id="resultContent"></div>
+
+
+
+<button class="button home-btn"
+onclick="showScreen('home')">
+
+🏠 Back to Home
+
+</button>
+
+
+
+<button class="button instagram-btn"
+onclick="openInstagram()">
+
+👀 Who’s Behind This?
+
+</button>
+
+
+
+</div>
+
+
+</section>
+
+
+</div>
 
 
 
 <script>
 
+// ===============================
+// NAVIGATION
+// ===============================
 
-////////////////////////////////////////////////////
-// VERSION 5 - PART 1
-// LCD SYSTEM + NOKIA FOUNDATION
-////////////////////////////////////////////////////
+function showScreen(id){
 
+    document.querySelectorAll(".screen")
+    .forEach(screen=>{
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(id)
+    .classList.add("active");
+
+
+    if(id==="snake"){
+        resetGame();
+    }
+
+}
+
+
+
+// ===============================
+// INSTAGRAM
+// ===============================
+
+function openInstagram(){
+
+    window.open(
+        "https://www.instagram.com/vasudevrajan_",
+        "_blank"
+    );
+
+}
+
+
+
+// ===============================
+// SNAKE GAME
+// ===============================
 
 
 const canvas =
-document.getElementById("lcd");
-
+document.getElementById("gameCanvas");
 
 const ctx =
 canvas.getContext("2d");
 
 
-
-ctx.imageSmoothingEnabled=false;
-
-
-
-const LCD_WIDTH=84;
-
-const LCD_HEIGHT=48;
-
-
-
-const PIXEL=1;
-
-
-
-function lcdClear(){
-
-    ctx.fillStyle="#9bbc0f";
-
-    ctx.fillRect(
-        0,
-        0,
-        LCD_WIDTH,
-        LCD_HEIGHT
-    );
-
-}
-
-
-
-
-function lcdText(
-text,
-x,
-y,
-size=6
-){
-
-    ctx.fillStyle="#0f380f";
-
-    ctx.font=
-    size+"px monospace";
-
-    ctx.fillText(
-        text,
-        x,
-        y
-    );
-
-}
-
-
-
-
-
-function lcdPixel(
-x,
-y
-){
-
-    ctx.fillStyle="#0f380f";
-
-    ctx.fillRect(
-        x,
-        y,
-        1,
-        1
-    );
-
-}
-
-
-
-
-
-function updateClock(){
-
-    let now=new Date();
-
-
-    document.getElementById(
-        "clock"
-    ).innerHTML=
-
-    now
-    .getHours()
-    .toString()
-    .padStart(2,"0")
-    +
-    ":"
-    +
-    now
-    .getMinutes()
-    .toString()
-    .padStart(2,"0");
-
-}
-
-
-
-setInterval(
-updateClock,
-1000
-);
-
-
-updateClock();
-
-
-
-
-
-
-function nokiaBoot(){
-
-
-    lcdClear();
-
-
-    lcdText(
-        "NOKIA",
-        28,
-        22,
-        8
-    );
-
-
-
-    setTimeout(()=>{
-
-
-        lcdClear();
-
-
-        lcdText(
-            "SNAKE II",
-            22,
-            25,
-            6
-        );
-
-
-    },1200);
-
-
-
-    setTimeout(()=>{
-
-
-        showMenu();
-
-
-    },2500);
-
-
-
-}
-
-
-
-
-
-
-let gameState="BOOT";
-
-
-
-
-
-function press(key){
-
-    console.log(
-        key
-    );
-
-}
-
-
-
-
-
-
-function showMenu(){
-
-    gameState="MENU";
-
-
-    lcdClear();
-
-
-    lcdText(
-        "SNAKE II",
-        22,
-        18,
-        6
-    );
-
-
-    lcdText(
-        "5 START",
-        22,
-        30,
-        6
-    );
-
-
-    lcdText(
-        "MENU LVL",
-        10,
-        42,
-        5
-    );
-
-
-}
-
-
-
-
-
-
-nokiaBoot();
-
-////////////////////////////////////////////////////
-// VERSION 5 - PART 2
-// SNAKE II ENGINE
-////////////////////////////////////////////////////
-
-
-const GRID_SIZE=2;
-
-
-// 84x48 LCD with 2x2 pixels per game block
-
-const GAME_WIDTH =
-Math.floor(LCD_WIDTH / GRID_SIZE);
-
-
-const GAME_HEIGHT =
-Math.floor(LCD_HEIGHT / GRID_SIZE);
-
-
-
 let snake=[];
-
 let food={};
 
-
-let direction="RIGHT";
-
-let nextDirection="RIGHT";
-
+let direction="right";
+let nextDirection="right";
 
 let score=0;
 
-
-let highScore =
-Number(
-localStorage.getItem("snakeV5High")
-)||0;
+let best=
+localStorage.getItem("snakeBest") || 0;
 
 
+let gameLoop;
 
-let level =
-Number(
-localStorage.getItem("snakeV5Level")
-)||1;
-
-
+let speed=120;
 
 let running=false;
 
-
-let gameTimer=null;
-
-
-
-let maze=[];
+let paused=false;
 
 
 
-const mazeLayouts=[
-
-
-[
-{x:15,y:8},
-{x:15,y:9},
-{x:15,y:10},
-
-{x:26,y:8},
-{x:26,y:9},
-{x:26,y:10}
-],
+document.getElementById("best")
+.innerText=best;
 
 
 
-[
-{x:10,y:12},
-{x:11,y:12},
-{x:12,y:12},
+function resetGame(){
 
-{x:30,y:5},
-{x:31,y:5},
-{x:32,y:5}
-],
+    snake=[
 
+        {x:10,y:10},
+        {x:9,y:10},
+        {x:8,y:10}
 
-
-[
-{x:20,y:4},
-{x:20,y:5},
-{x:20,y:6},
-{x:20,y:7},
-
-{x:20,y:15},
-{x:20,y:16}
-]
-
-];
+    ];
 
 
+    direction="right";
+    nextDirection="right";
 
+
+    score=0;
+
+    speed=120;
+
+    paused=false;
+
+
+    document.getElementById("score")
+    .innerText=score;
+
+
+    createFood();
+
+
+    startGame();
+
+}
 
 
 
@@ -702,170 +842,46 @@ const mazeLayouts=[
 
 function startGame(){
 
-
-    snake=[
-
-        {
-            x:20,
-            y:12
-        },
-
-        {
-            x:19,
-            y:12
-        },
-
-        {
-            x:18,
-            y:12
-        }
-
-    ];
-
-
-
-    direction="RIGHT";
-
-    nextDirection="RIGHT";
-
-
-
-    score=0;
-
-
-
-    maze =
-    JSON.parse(
-
-        JSON.stringify(
-
-            mazeLayouts[
-            Math.floor(
-            Math.random()
-            *
-            mazeLayouts.length
-            )
-            ]
-
-        )
-
-    );
-
-
-
-    spawnFood();
-
+    clearInterval(gameLoop);
 
 
     running=true;
 
-    gameState="PLAY";
 
-
-
-    clearInterval(gameTimer);
-
-
-
-    gameTimer=setInterval(
-
+    gameLoop=
+    setInterval(
         updateGame,
-
-        getSpeed()
-
+        speed
     );
 
-
-
-    drawGame();
-
-
 }
 
 
 
 
 
+function pauseGame(){
+
+    if(!running) return;
 
 
+    if(paused){
 
-function getSpeed(){
+        paused=false;
 
-
-    return 250-(level*15);
-
-
-}
-
-
-
-
-
-
-
-
-
-function spawnFood(){
-
-
-    do{
-
-
-        food={
-
-            x:
-            Math.floor(
-            Math.random()
-            *
-            GAME_WIDTH
-            ),
-
-
-            y:
-            Math.floor(
-            Math.random()
-            *
-            GAME_HEIGHT
-            )
-
-        };
-
-
+        startGame();
 
     }
 
+    else{
 
-    while(
+        paused=true;
 
-        snake.some(
+        clearInterval(gameLoop);
 
-            part=>
-
-            part.x===food.x &&
-
-            part.y===food.y
-
-        )
-
-        ||
-
-        maze.some(
-
-            wall=>
-
-            wall.x===food.x &&
-
-            wall.y===food.y
-
-        )
-
-    );
+    }
 
 }
-
-
-
-
 
 
 
@@ -874,119 +890,74 @@ function spawnFood(){
 function updateGame(){
 
 
+    if(paused)
+    return;
+
+
+
     direction=nextDirection;
 
 
-
     let head={
-
-        x:snake[0].x,
-
-        y:snake[0].y
-
+        ...snake[0]
     };
 
 
 
-
-
-    if(direction==="UP")
+    if(direction==="up")
         head.y--;
 
 
-
-    if(direction==="DOWN")
+    if(direction==="down")
         head.y++;
 
 
-
-    if(direction==="LEFT")
+    if(direction==="left")
         head.x--;
 
 
-
-    if(direction==="RIGHT")
+    if(direction==="right")
         head.x++;
 
 
 
 
-
-
-    // Snake II wrap mode
-
+    // wrap around
 
     if(head.x<0)
-        head.x=GAME_WIDTH-1;
+        head.x=34;
 
 
-
-    if(head.x>=GAME_WIDTH)
+    if(head.x>34)
         head.x=0;
 
 
-
     if(head.y<0)
-        head.y=GAME_HEIGHT-1;
+        head.y=34;
 
 
-
-    if(head.y>=GAME_HEIGHT)
+    if(head.y>34)
         head.y=0;
 
 
 
 
 
-
-
-    if(
-
-        maze.some(
-
-            wall=>
-
-            wall.x===head.x &&
-
-            wall.y===head.y
-
-        )
-
-    ){
-
-        gameOver();
-
-        return;
-
-    }
-
-
-
-
-
+    // self collision
 
     if(
-
         snake.some(
-
             part=>
-
             part.x===head.x &&
-
             part.y===head.y
-
         )
-
     ){
 
-        gameOver();
+        endGame();
 
         return;
 
     }
-
-
-
 
 
 
@@ -996,46 +967,29 @@ function updateGame(){
 
 
 
-
-
     if(
-
         head.x===food.x &&
-
         head.y===food.y
-
     ){
 
 
         score++;
 
 
-
-        if(score>highScore){
-
-
-            highScore=score;
+        document.getElementById("score")
+        .innerText=score;
 
 
-            localStorage.setItem(
-
-                "snakeV5High",
-
-                highScore
-
-            );
+        checkAchievements(score);
 
 
-        }
+        increaseDifficulty();
 
 
-
-        spawnFood();
-
+        createFood();
 
 
     }
-
     else{
 
 
@@ -1046,17 +1000,10 @@ function updateGame(){
 
 
 
-
-
     drawGame();
 
 
-
 }
-
-
-
-
 
 
 
@@ -1065,361 +1012,74 @@ function updateGame(){
 function drawGame(){
 
 
-    lcdClear();
+    ctx.fillStyle="#020617";
 
-
-
-    ctx.fillStyle="#0f380f";
-
-
-
-
-
-
-    // maze
-
-
-    maze.forEach(
-
-        wall=>{
-
-
-            ctx.fillRect(
-
-                wall.x*GRID_SIZE,
-
-                wall.y*GRID_SIZE,
-
-                GRID_SIZE,
-
-                GRID_SIZE
-
-            );
-
-
-        }
-
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
     );
 
 
 
-
+    let size=10;
 
 
 
     // food
 
+    ctx.fillStyle="#ef4444";
 
-    ctx.fillRect(
 
-        food.x*GRID_SIZE,
+    ctx.beginPath();
 
-        food.y*GRID_SIZE,
 
-        GRID_SIZE,
+    ctx.arc(
 
-        GRID_SIZE
+        food.x*size+5,
+
+        food.y*size+5,
+
+        5,
+
+        0,
+
+        Math.PI*2
 
     );
 
 
-
-
+    ctx.fill();
 
 
 
 
     // snake
 
+    snake.forEach((part,index)=>{
 
-    snake.forEach(
 
-        part=>{
+        ctx.fillStyle =
+        index===0
+        ? "#bbf7d0"
+        : "#22c55e";
 
 
-            ctx.fillRect(
+        ctx.fillRect(
 
-                part.x*GRID_SIZE,
+            part.x*size,
 
-                part.y*GRID_SIZE,
+            part.y*size,
 
-                GRID_SIZE,
+            size,
 
-                GRID_SIZE
-
-            );
-
-
-        }
-
-    );
-
-
-
-
-
-
-
-    lcdText(
-
-        "S"+score,
-
-        2,
-
-        6,
-
-        5
-
-    );
-
-
-
-    lcdText(
-
-        "H"+highScore,
-
-        55,
-
-        6,
-
-        5
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function gameOver(){
-
-
-    clearInterval(gameTimer);
-
-
-
-    running=false;
-
-
-
-    gameState="GAMEOVER";
-
-
-
-    lcdClear();
-
-
-
-    lcdText(
-
-        "GAME OVER",
-
-        15,
-
-        22,
-
-        7
-
-    );
-
-
-
-    lcdText(
-
-        "5 RETRY",
-
-        22,
-
-        35,
-
-        6
-
-    );
-
-
-}
-
-
-
-
-
-
-
-
-
-// Replace the basic button handler
-
-
-function press(key){
-
-
-
-    if(key==="OK"){
-
-
-        if(!running){
-
-            startGame();
-
-        }
-
-
-        return;
-
-    }
-
-
-
-
-
-
-    if(key==="MENU"){
-
-
-        level++;
-
-
-
-        if(level>9)
-
-            level=1;
-
-
-
-        localStorage.setItem(
-
-            "snakeV5Level",
-
-            level
+            size
 
         );
 
 
-
-        showMenu();
-
-
-
-        return;
-
-
-    }
-
-
-
-
-
-
-
-    if(key==="BACK"){
-
-
-        clearInterval(gameTimer);
-
-
-        running=false;
-
-
-        showMenu();
-
-
-        return;
-
-
-    }
-
-
-
-
-
-
-
-
-    if(!running)
-
-        return;
-
-
-
-
-
-
-
-
-    if(
-
-        key==="UP"
-
-        &&
-
-        direction!=="DOWN"
-
-    )
-
-        nextDirection="UP";
-
-
-
-
-
-
-
-    if(
-
-        key==="DOWN"
-
-        &&
-
-        direction!=="UP"
-
-    )
-
-        nextDirection="DOWN";
-
-
-
-
-
-
-
-
-    if(
-
-        key==="LEFT"
-
-        &&
-
-        direction!=="RIGHT"
-
-    )
-
-        nextDirection="LEFT";
-
-
-
-
-
-
-
-
-    if(
-
-        key==="RIGHT"
-
-        &&
-
-        direction!=="LEFT"
-
-    )
-
-        nextDirection="RIGHT";
+    });
 
 
 
@@ -1429,228 +1089,24 @@ function press(key){
 
 
 
-
-
-
-document.addEventListener(
-
-"keydown",
-
-function(e){
-
-
-
-    if(e.key==="ArrowUp")
-        press("UP");
-
-
-
-    if(e.key==="ArrowDown")
-        press("DOWN");
-
-
-
-    if(e.key==="ArrowLeft")
-        press("LEFT");
-
-
-
-    if(e.key==="ArrowRight")
-        press("RIGHT");
-
-
-
-    if(e.key==="5" || e.key==="Enter")
-        press("OK");
-
-
-
-    if(e.key==="2")
-        press("UP");
-
-
-
-    if(e.key==="4")
-        press("LEFT");
-
-
-
-    if(e.key==="6")
-        press("RIGHT");
-
-
-
-    if(e.key==="8")
-        press("DOWN");
-
-
-});
-
-////////////////////////////////////////////////////
-// VERSION 5 - PART 3
-// NOKIA EFFECTS + BONUS FEATURES
-////////////////////////////////////////////////////
-
-
-let audioContext=null;
-
-
-let bonusItem=null;
-
-
-let bonusTimer=null;
-
-
-
-function initAudio(){
-
-
-    if(!audioContext){
-
-
-        audioContext =
-        new (
-        window.AudioContext ||
-        window.webkitAudioContext
-        )();
-
-
-    }
-
-
-}
-
-
-
-
-
-function tone(
-frequency=600,
-duration=80
-){
-
-
-    initAudio();
-
-
-
-    let osc =
-    audioContext.createOscillator();
-
-
-    let gain =
-    audioContext.createGain();
-
-
-
-    osc.type="square";
-
-
-    osc.frequency.value =
-    frequency;
-
-
-
-    osc.connect(gain);
-
-
-    gain.connect(
-        audioContext.destination
-    );
-
-
-
-    osc.start();
-
-
-
-    gain.gain.setValueAtTime(
-
-        0.12,
-
-        audioContext.currentTime
-
-    );
-
-
-
-    gain.gain.exponentialRampToValueAtTime(
-
-        0.01,
-
-        audioContext.currentTime+
-        duration/1000
-
-    );
-
-
-
-    osc.stop(
-
-        audioContext.currentTime+
-        duration/1000
-
-    );
-
-
-}
-
-
-
-
-
-
-
-function vibratePhone(){
-
-
-    if(navigator.vibrate){
-
-
-        navigator.vibrate(60);
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-function createBonus(){
-
-
-    if(bonusItem)
-
-        return;
-
+function createFood(){
 
 
     do{
 
 
-        bonusItem={
-
+        food={
 
             x:
             Math.floor(
-            Math.random()*GAME_WIDTH
+                Math.random()*35
             ),
 
 
             y:
             Math.floor(
-            Math.random()*GAME_HEIGHT
-            ),
-
-
-            value:25
-
+                Math.random()*35
+            )
 
         };
 
@@ -1660,539 +1116,91 @@ function createBonus(){
     while(
 
         snake.some(
-
             part=>
-
-            part.x===bonusItem.x &&
-
-            part.y===bonusItem.y
-
+            part.x===food.x &&
+            part.y===food.y
         )
 
     );
 
 
-
-    clearTimeout(
-        bonusTimer
-    );
-
-
-    bonusTimer=setTimeout(()=>{
-
-
-        bonusItem=null;
-
-
-    },6000);
-
-
 }
 
 
 
 
 
-
-
-
-function drawBonus(){
-
-
-    if(!bonusItem)
-
-        return;
-
-
-
-    ctx.fillStyle="#0f380f";
-
+function increaseDifficulty(){
 
 
     if(
-
-    Math.floor(
-    Date.now()/300
-    )%2
-
+        score%5===0 &&
+        speed>50
     ){
 
 
+        speed-=10;
 
-        ctx.fillRect(
 
-            bonusItem.x*GRID_SIZE,
+        clearInterval(gameLoop);
 
-            bonusItem.y*GRID_SIZE,
 
-            GRID_SIZE,
-
-            GRID_SIZE
-
-        );
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-function checkBonus(){
-
-
-    if(!bonusItem)
-
-        return;
-
-
-
-
-    if(
-
-
-        snake[0].x===bonusItem.x &&
-
-        snake[0].y===bonusItem.y
-
-
-    ){
-
-
-        score += bonusItem.value;
-
-
-        bonusItem=null;
-
-
-
-        tone(
-            900,
-            120
-        );
-
-
-        vibratePhone();
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-
-// Add bonus drawing
-
-const originalDraw =
-drawGame;
-
-
-
-drawGame=function(){
-
-
-    originalDraw();
-
-
-    drawBonus();
-
-
-};
-
-
-
-
-
-
-
-
-// Add bonus checking
-
-const originalUpdate =
-updateGame;
-
-
-
-updateGame=function(){
-
-
-    let oldScore=score;
-
-
-
-    originalUpdate();
-
-
-
-    checkBonus();
-
-
-
-    if(score>oldScore){
-
-
-        tone(
-            650,
-            70
-        );
-
-
-        vibratePhone();
-
-
-
-        canvas.style.opacity="0.65";
-
-
-        setTimeout(()=>{
-
-
-            canvas.style.opacity="1";
-
-
-        },50);
-
-
-
-    }
-
-
-
-};
-
-
-
-
-
-
-
-
-// Bonus appears after eating every 5 items
-
-const originalSpawn =
-spawnFood;
-
-
-
-spawnFood=function(){
-
-
-    originalSpawn();
-
-
-
-    if(
-
-        score>0 &&
-
-        score%5===0
-
-    ){
-
-
-        createBonus();
-
-
-    }
-
-
-};
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////
-// BATTERY + SIGNAL
-////////////////////////////////////////////////////
-
-
-let batteryLevel=3;
-
-let signalLevel=3;
-
-
-
-function updatePhoneStatus(){
-
-
-
-    batteryLevel--;
-
-
-    signalLevel--;
-
-
-
-    if(batteryLevel<=0)
-
-        batteryLevel=3;
-
-
-
-    if(signalLevel<=0)
-
-        signalLevel=3;
-
-
-
-
-
-    document.getElementById(
-        "battery"
-    ).innerHTML =
-
-    "▮".repeat(
-        batteryLevel
-    );
-
-
-
-
-
-    document.getElementById(
-        "signal"
-    ).innerHTML =
-
-    "▮".repeat(
-        signalLevel
-    );
-
-
-
-}
-
-
-
-setInterval(
-
-    updatePhoneStatus,
-
-    15000
-
-);
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////
-// TOUCH SWIPE CONTROLS
-////////////////////////////////////////////////////
-
-
-let swipeX=0;
-
-let swipeY=0;
-
-
-
-canvas.addEventListener(
-
-"touchstart",
-
-function(e){
-
-
-    swipeX =
-    e.changedTouches[0].screenX;
-
-
-    swipeY =
-    e.changedTouches[0].screenY;
-
-
-
-},
-{
-    passive:true
-}
-
-);
-
-
-
-
-
-
-canvas.addEventListener(
-
-"touchend",
-
-function(e){
-
-
-
-    let endX =
-    e.changedTouches[0].screenX;
-
-
-    let endY =
-    e.changedTouches[0].screenY;
-
-
-
-    let dx=endX-swipeX;
-
-    let dy=endY-swipeY;
-
-
-
-
-
-    if(
-
-        Math.abs(dx) >
-
-        Math.abs(dy)
-
-    ){
-
-
-
-        if(dx>0)
-
-            press("RIGHT");
-
-        else
-
-            press("LEFT");
-
-
-
-    }
-
-    else{
-
-
-
-        if(dy>0)
-
-            press("DOWN");
-
-        else
-
-            press("UP");
-
-
-
-    }
-
-
-
-}
-
-);
-
-
-
-
-
-
-canvas.addEventListener(
-
-"touchmove",
-
-function(e){
-
-    e.preventDefault();
-
-},
-
-{
-    passive:false
-}
-
-);
-
-////////////////////////////////////////////////////
-// VERSION 5 - PART 4
-// FINAL NOKIA POLISH
-////////////////////////////////////////////////////
-
-
-
-let paused=false;
-
-
-
-////////////////////////////////////////////////////
-// PAUSE FUNCTION
-////////////////////////////////////////////////////
-
-
-function togglePause(){
-
-
-    if(!running)
-
-        return;
-
-
-
-    paused=!paused;
-
-
-
-    if(paused){
-
-
-        clearInterval(gameTimer);
-
-
-
-        lcdText(
-
-            "PAUSED",
-
-            25,
-
-            25,
-
-            7
-
-        );
-
-
-
-    }
-
-    else{
-
-
-        gameTimer=setInterval(
-
+        gameLoop=
+        setInterval(
             updateGame,
-
-            getSpeed()
-
+            speed
         );
 
 
-        drawGame();
+    }
+
+}
+
+
+
+
+
+function endGame(){
+
+
+    clearInterval(gameLoop);
+
+
+    running=false;
+
+
+
+    if(score>best){
+
+
+        best=score;
+
+
+        localStorage.setItem(
+            "snakeBest",
+            best
+        );
 
 
     }
+
+
+
+    document.getElementById("best")
+    .innerText=best;
+
+
+
+    document.getElementById("finalScore")
+    .innerText=score;
+
+
+    document.getElementById("finalBest")
+    .innerText=best;
+
+
+
+    showScreen("gameOver");
 
 
 }
@@ -2201,98 +1209,397 @@ function togglePause(){
 
 
 
+// ===============================
+// CONTROLS
+// ===============================
+
+
+function changeDirection(dir){
+
+
+    if(
+        dir==="up" &&
+        direction!=="down"
+    )
+        nextDirection="up";
 
 
 
-////////////////////////////////////////////////////
-// EXTEND KEYBOARD CONTROLS
-////////////////////////////////////////////////////
+    if(
+        dir==="down" &&
+        direction!=="up"
+    )
+        nextDirection="down";
+
+
+
+    if(
+        dir==="left" &&
+        direction!=="right"
+    )
+        nextDirection="left";
+
+
+
+    if(
+        dir==="right" &&
+        direction!=="left"
+    )
+        nextDirection="right";
+
+
+}
+
+
 
 
 document.addEventListener(
-
 "keydown",
-
 function(e){
 
 
+    if(e.key==="ArrowUp" || e.key==="w")
+        changeDirection("up");
 
-    if(e.key==="p" || e.key==="P"){
+
+    if(e.key==="ArrowDown" || e.key==="s")
+        changeDirection("down");
 
 
-        togglePause();
+    if(e.key==="ArrowLeft" || e.key==="a")
+        changeDirection("left");
+
+
+    if(e.key==="ArrowRight" || e.key==="d")
+        changeDirection("right");
+
+
+});
+
+
+
+
+
+
+// Swipe support
+
+let touchStartX=0;
+let touchStartY=0;
+
+
+
+canvas.addEventListener(
+"touchstart",
+function(e){
+
+
+    touchStartX=
+    e.changedTouches[0].screenX;
+
+
+    touchStartY=
+    e.changedTouches[0].screenY;
+
+
+});
+
+
+
+
+canvas.addEventListener(
+"touchend",
+function(e){
+
+
+    let x=
+    e.changedTouches[0].screenX;
+
+
+    let y=
+    e.changedTouches[0].screenY;
+
+
+
+    let dx=x-touchStartX;
+
+    let dy=y-touchStartY;
+
+
+
+    if(
+        Math.abs(dx)>
+        Math.abs(dy)
+    ){
+
+
+        if(dx>0)
+            changeDirection("right");
+
+        else
+            changeDirection("left");
+
+
+    }
+
+    else{
+
+
+        if(dy>0)
+            changeDirection("down");
+
+        else
+            changeDirection("up");
 
 
     }
 
 
+});
+
+
+
+
+
+// ===============================
+// ACHIEVEMENTS
+// ===============================
+
+
+const achievements={
+
+
+    first:{
+        score:1,
+        text:"🍎 First Bite"
+    },
+
+
+    ten:{
+        score:10,
+        text:"⭐ Growing Strong"
+    },
+
+
+    fifty:{
+        score:50,
+        text:"🔥 Snake Master"
+    },
+
+
+    hundred:{
+        score:100,
+        text:"🐍 Legendary Snake"
+    }
+
+
+};
+
+
+
+
+
+function checkAchievements(score){
+
+
+    let unlocked=
+    JSON.parse(
+        localStorage.getItem(
+            "snakeAchievements"
+        )
+    ) || [];
+
+
+
+    Object.keys(achievements)
+    .forEach(key=>{
+
+
+        let item=
+        achievements[key];
+
+
+
+        if(
+            score>=item.score &&
+            !unlocked.includes(key)
+        ){
+
+
+            unlocked.push(key);
+
+
+
+            localStorage.setItem(
+
+                "snakeAchievements",
+
+                JSON.stringify(unlocked)
+
+            );
+
+
+            // small notification
+
+            console.log(
+                "Achievement unlocked:",
+                item.text
+            );
+
+
+        }
+
+
+    });
+
 
 }
 
-);
+
+
+// draw initial empty board
+
+drawGame();
+
+// ===============================
+// PERSONALITY TEST
+// ===============================
+
+
+const questions = [
+
+{
+q:"Your ideal weekend is:",
+answers:[
+["A","Trying something completely new","Explorer"],
+["B","Reading, learning, or solving puzzles","Thinker"],
+["C","Spending time with friends or family","Connector"],
+["D","Organizing projects and getting things done","Organizer"]
+]
+},
+
+
+{
+q:"When facing a challenge, you usually:",
+answers:[
+["A","Jump in and experiment","Explorer"],
+["B","Analyze the situation carefully","Thinker"],
+["C","Ask others for ideas and support","Connector"],
+["D","Create a step-by-step plan","Organizer"]
+]
+},
+
+
+{
+q:"People usually describe you as:",
+answers:[
+["A","Adventurous","Explorer"],
+["B","Thoughtful","Thinker"],
+["C","Caring","Connector"],
+["D","Reliable","Organizer"]
+]
+},
+
+
+{
+q:"You enjoy activities that let you:",
+answers:[
+["A","Explore new experiences","Explorer"],
+["B","Solve interesting problems","Thinker"],
+["C","Help and connect with people","Connector"],
+["D","Build and organize things","Organizer"]
+]
+},
+
+
+{
+q:"Your workspace is usually:",
+answers:[
+["A","Creative chaos","Explorer"],
+["B","Full of notes and ideas","Thinker"],
+["C","Comfortable and welcoming","Connector"],
+["D","Clean and organized","Organizer"]
+]
+},
+
+
+{
+q:"In a group project you often:",
+answers:[
+["A","Suggest exciting ideas","Explorer"],
+["B","Think about the details","Thinker"],
+["C","Support everyone","Connector"],
+["D","Keep things moving","Organizer"]
+]
+},
+
+
+{
+q:"When learning something new, you prefer:",
+answers:[
+["A","Trying it yourself","Explorer"],
+["B","Understanding how it works","Thinker"],
+["C","Learning with others","Connector"],
+["D","Following a clear method","Organizer"]
+]
+},
+
+
+{
+q:"Which word fits you best?",
+answers:[
+["A","Curious","Explorer"],
+["B","Wise","Thinker"],
+["C","Kind","Connector"],
+["D","Dependable","Organizer"]
+]
+}
+
+];
+
+
+
+let currentQuestion=0;
+
+
+let results={
+
+Explorer:0,
+
+Thinker:0,
+
+Connector:0,
+
+Organizer:0
+
+};
 
 
 
 
 
+function startQuiz(){
 
 
-
-////////////////////////////////////////////////////
-// FINAL NOKIA MENU
-////////////////////////////////////////////////////
+    currentQuestion=0;
 
 
-function showMenu(){
+    results={
+
+        Explorer:0,
+
+        Thinker:0,
+
+        Connector:0,
+
+        Organizer:0
+
+    };
 
 
-    gameState="MENU";
+    showScreen("quiz");
 
 
-
-    lcdClear();
-
-
-
-    lcdText(
-
-        "SNAKE II",
-
-        22,
-
-        16,
-
-        7
-
-    );
-
-
-
-    lcdText(
-
-        "5 PLAY",
-
-        25,
-
-        28,
-
-        6
-
-    );
-
-
-
-    lcdText(
-
-        "LV "+level,
-
-        25,
-
-        40,
-
-        6
-
-    );
+    displayQuestion();
 
 
 }
@@ -2301,75 +1608,79 @@ function showMenu(){
 
 
 
+function displayQuestion(){
 
 
-
-////////////////////////////////////////////////////
-// FINAL BOOT ANIMATION
-////////////////////////////////////////////////////
+    let question =
+    questions[currentQuestion];
 
 
-function finalBoot(){
-
-
-
-    gameState="BOOT";
-
-
-
-    lcdClear();
-
-
-
-    lcdText(
-
-        "NOKIA",
-
-        28,
-
-        20,
-
-        8
-
+    let container =
+    document.getElementById(
+        "quizContent"
     );
 
 
 
-    setTimeout(()=>{
+    document.getElementById(
+        "progress"
+    ).style.width =
 
+    (
+        (currentQuestion /
+        questions.length)
+        *100
 
-        lcdClear();
-
-
-
-        lcdText(
-
-            "SNAKE II",
-
-            22,
-
-            25,
-
-            6
-
-        );
-
-
-    },1200);
+    )+"%";
 
 
 
 
-
-    setTimeout(()=>{
-
-
-        showMenu();
+    let html="";
 
 
 
-    },2500);
+    html +=
 
+    `
+    <h3>
+    Question ${currentQuestion+1}
+    / ${questions.length}
+    </h3>
+    `;
+
+
+
+    html +=
+
+    `
+    <p>
+    ${question.q}
+    </p>
+    `;
+
+
+
+    question.answers.forEach(answer=>{
+
+
+        html +=
+
+        `
+        <div class="answer"
+        onclick="selectAnswer('${answer[2]}')">
+
+        ${answer[0]}) ${answer[1]}
+
+        </div>
+        `;
+
+
+    });
+
+
+
+    container.innerHTML=html;
 
 
 }
@@ -2378,25 +1689,182 @@ function finalBoot(){
 
 
 
+function selectAnswer(type){
+
+
+    results[type]++;
+
+
+    currentQuestion++;
 
 
 
-////////////////////////////////////////////////////
-// START FINAL SYSTEM
-////////////////////////////////////////////////////
+    if(
+        currentQuestion <
+        questions.length
+    ){
+
+        displayQuestion();
+
+    }
+
+    else{
+
+        showResult();
+
+    }
 
 
-finalBoot();
+}
 
 
 
 
 
-////////////////////////////////////////////////////
-// CLOSE SCRIPT BELOW THIS LINE
-////////////////////////////////////////////////////
+function showResult(){
+
+
+
+    let winner =
+
+    Object.keys(results)
+    .reduce(
+        (a,b)=>
+        results[a] >= results[b]
+        ? a
+        : b
+    );
+
+
+
+
+    const personalities={
+
+
+    Explorer:{
+
+        emoji:"🌟",
+
+        title:"The Explorer",
+
+        text:
+        "You are curious, adventurous, and always looking for new experiences. You enjoy discovering ideas, places, and challenges."
+
+    },
+
+
+    Thinker:{
+
+        emoji:"🧠",
+
+        title:"The Thinker",
+
+        text:
+        "You love understanding how things work. You analyze situations, ask questions, and enjoy learning new concepts."
+
+    },
+
+
+    Connector:{
+
+        emoji:"❤️",
+
+        title:"The Connector",
+
+        text:
+        "You value people and relationships. Your energy comes from sharing moments and creating meaningful connections."
+
+    },
+
+
+    Organizer:{
+
+        emoji:"🎯",
+
+        title:"The Organizer",
+
+        text:
+        "You enjoy structure, planning, and turning ideas into reality. You are someone people can rely on."
+
+    }
+
+
+    };
+
+
+
+    let result =
+    personalities[winner];
+
+
+
+
+    document.getElementById(
+        "resultContent"
+    ).innerHTML =
+
+
+
+    `
+
+    <h1>
+    ${result.emoji}
+    </h1>
+
+
+    <h2>
+    Your personality matches...
+    <br><br>
+
+    ${result.title}
+
+    </h2>
+
+
+
+    <p>
+
+    ${result.text}
+
+    </p>
+
+
+    <button class="button personality-btn"
+
+    onclick="startQuiz()">
+
+    🔄 Retake Test
+
+    </button>
+
+
+    `;
+
+
+
+
+    showScreen("result");
+
+
+}
+
+
+
+
+
+// ===============================
+// FINAL INITIALIZATION
+// ===============================
+
+
+document.getElementById("best")
+.innerText =
+localStorage.getItem("snakeBest") || 0;
+
+
 
 </script>
+
 
 </body>
 
